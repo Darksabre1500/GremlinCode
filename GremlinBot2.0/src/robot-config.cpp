@@ -21,7 +21,7 @@ motor LArm = motor(PORT3, ratio36_1, true);
 motor RArm = motor(PORT8, ratio36_1, false);
 motor Flipper = motor(PORT10, ratio6_1, false);
 motor RingCatcher = motor(PORT13, ratio18_1, true);
-encoder FlipperAngle = encoder(Brain.ThreeWirePort.G);
+pot FlipperAngle = pot(Brain.ThreeWirePort.G);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

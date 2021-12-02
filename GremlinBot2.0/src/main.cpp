@@ -33,7 +33,7 @@
 // RArm                 motor         8               
 // Flipper              motor         10              
 // RingCatcher          motor         13              
-// FlipperAngle         encoder       G, H            
+// FlipperAngle         potentiometer G            
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 using namespace vex;

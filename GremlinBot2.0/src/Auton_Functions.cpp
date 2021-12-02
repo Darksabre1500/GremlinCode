@@ -100,18 +100,18 @@ void moveFlipper (double time, double speed, directionType dir){
 
 void activateFlipper (double rot, double speed, double timeout){
   double initSec = second;
-  if (rot < FlipperAngle.rotation(deg)){
+  if (rot > flipperAngle()){
     Flipper.spin(reverse, speed, rpm);
-    while(rot < FlipperAngle.rotation(deg)){
-      wait(10, msec);
+    while(rot > flipperAngle()){
+      wait(1, msec);
       if (second - initSec > timeout)
         break;
     }
   }
   else {
     Flipper.spin(fwd, speed, rpm);
-    while(rot > FlipperAngle.rotation(deg)){
-      wait(10, msec);
+    while(rot < flipperAngle()){
+      wait(1, msec);
       if (second - initSec > timeout)
         break;
     }

@@ -16,7 +16,7 @@ extern motor LArm;
 extern motor RArm;
 extern motor Flipper;
 extern motor RingCatcher;
-extern encoder FlipperAngle;
+extern pot FlipperAngle;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

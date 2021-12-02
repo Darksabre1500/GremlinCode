@@ -13,6 +13,7 @@ int brainDebug();
 int controllerDebug();
 int timeoutClock();
 int TerminalDebug(); 
+double flipperAngle();
 double inToRev(double centimetersTraveled, double wheelDiameter);
 double inToDeg(double centimetersTraveled, double wheelDiameter);
 double degToRev(double degreesTraveled);
