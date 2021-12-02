@@ -1,0 +1,7 @@
+-Make auton for left and right sides that pull yellow goal and put ring in alliance goal.
+-Edit Brain Print so that it shows all the values in a more consise fashion(printing multiple things on one line with pixel numbers)
+-Toggle lower speed on analog sticks
+-Ideal Ring height button
+-Adjust angles on potentiometer so the values make more sense
+-Print out potentiometer values (both raw and altered)
+-Get code for Pnuematics
