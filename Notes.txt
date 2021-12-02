@@ -1,2 +1,3 @@
 Notes:
-Change Version Number in v5code file and in summary when committing file to branch. Write a description of changes in description box.
+Change Version Number in v5code file and in summary when committing file to branch. Write a description of changes in description box. 
+For different autons or skills setups create different branches and add another dot with the version number of that general version (i.e. 2.5.2).
