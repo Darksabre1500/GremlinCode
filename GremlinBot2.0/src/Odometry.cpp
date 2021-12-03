@@ -2,8 +2,8 @@
 
 //Starting conditions
 const double Wl = 7;
-const double Wr = 7;
-const double Ws = 4.15;
+const double Wr = 1.625;
+const double Ws = 6.125;
 const double startRot = degToRadians(90);
 const double startX = 0;
 const double startY = 0;

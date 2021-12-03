@@ -20,11 +20,32 @@ void GoTo(double target_X, double target_Y, double timeout)
   double begAngle = angleDeg;
   while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
   {
-    Omni_Controller(vectorRAngle(target_X, target_Y), PIDcontrol.PID(vectorLength(target_X, target_Y), 14, 0, 0, 0), begAngle);
+    Omni_Controller(vectorRAngle(target_X, target_Y), PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0), begAngle);
     LFM.spin(fwd, Mfl, rpm);
     RFM.spin(fwd, Mfr, rpm);
     LBM.spin(fwd, Mbl, rpm);
     RBM.spin(fwd, Mbr, rpm);
+
+    if (second - initSec > timeout)
+      break;
+      
+    wait(10, msec);
+  }
+  LFM.stop(brake);
+  RFM.stop(brake);
+  LBM.stop(brake);
+  RBM.stop(brake);
+}
+
+void GoTo2(double target_X, double timeout, int power)
+{
+  double initSec = second;
+  while(std::abs(target_X-globalX) > 1)
+  {
+    LFM.spin(fwd, power, rpm);
+    RFM.spin(fwd, power, rpm);
+    LBM.spin(fwd, power, rpm);
+    RBM.spin(fwd, power, rpm);
 
     if (second - initSec > timeout)
       break;

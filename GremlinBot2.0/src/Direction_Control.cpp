@@ -40,7 +40,7 @@ double Omni_Rotation(double targetAngle)
   double dir = -1;
   if(sin(degToRadians(targetAngle) - angleRad) < 0)
     dir = 1;
-  return dir * PIDcontrol.PID(angleDiff(angleDeg, targetAngle), 2.2, 0, 0, 0);
+  return dir * PIDcontrol.PID(angleDiff(angleDeg, targetAngle), 3, 0, 0, 0);
 }
 
 /*void XDrive_Correction()
