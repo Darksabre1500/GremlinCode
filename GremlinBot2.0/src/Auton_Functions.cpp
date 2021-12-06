@@ -17,18 +17,44 @@ int odomRuntime()
 void GoTo(double target_X, double target_Y, double timeout)
 {
   double initSec = second;
-  double begAngle = angleRad;
+  double speed = PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0);
+
   while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
   {
-    Omni_Controller(vectorRAngle(target_X, target_Y), PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0), begAngle);
-    LFM.spin(fwd, Mfl, rpm);
-    RFM.spin(fwd, Mfr, rpm);
-    LBM.spin(fwd, Mbl, rpm);
-    RBM.spin(fwd, Mbr, rpm);
+    double pow = std_Controller(target_X, target_Y, speed);
+
+    if (turning) {
+      while(true){
+        pow = std_Controller(target_X, target_Y, speed);
+        
+        LFM.spin(fwd, pow, rpm);
+        RFM.spin(fwd, -pow, rpm);
+        LBM.spin(fwd, pow, rpm);
+        RBM.spin(fwd, -pow, rpm);
+
+        if (second - initSec > timeout)
+          break;
+
+        else if (turning == false) {
+          LFM.stop(brake);
+          RFM.stop(brake);
+          LBM.stop(brake);
+          RBM.stop(brake);
+          wait(0.25, sec);
+          break;
+        }
+        wait(10, msec);
+      }
+    }
+
+    LFM.spin(fwd, pow, rpm);
+    RFM.spin(fwd, pow, rpm);
+    LBM.spin(fwd, pow, rpm);
+    RBM.spin(fwd, pow, rpm);
 
     if (second - initSec > timeout)
       break;
-      
+
     wait(10, msec);
   }
   LFM.stop(brake);
@@ -37,15 +63,17 @@ void GoTo(double target_X, double target_Y, double timeout)
   RBM.stop(brake);
 }
 
-void GoTo2(double target_X, double timeout, int power)
+void GoTo2(double target_X, double target_Y, double timeout)
 {
   double initSec = second;
-  while(std::abs(target_X-globalX) > 1)
+  double begAngle = angleRad;
+  while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
   {
-    LFM.spin(fwd, power, rpm);
-    RFM.spin(fwd, power, rpm);
-    LBM.spin(fwd, power, rpm);
-    RBM.spin(fwd, power, rpm);
+    Omni_Controller(vectorRAngle(target_X, target_Y), PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0), begAngle);
+    LFM.spin(fwd, Mfl, rpm);
+    RFM.spin(fwd, Mfr, rpm);
+    LBM.spin(fwd, Mbl, rpm);
+    RBM.spin(fwd, Mbr, rpm);
 
     if (second - initSec > timeout)
       break;
@@ -67,7 +95,7 @@ void TurnTo(double target_angle, double timeout)
   while(std::abs(target_angle - angleDeg) > 3)
   {
     //std::cout << angleDiff(angleDeg, target_angle) << std::endl;
-    double pow = Omni_Rotation(target_angle);
+    double pow = rotation_Controller(target_angle, PIDcontrol.PID(angleDiff(angleDeg, target_angle), 3, 0, 0, 0));
     LFM.spin(fwd, pow, rpm);
     RFM.spin(fwd, -pow, rpm);
     LBM.spin(fwd, pow, rpm);

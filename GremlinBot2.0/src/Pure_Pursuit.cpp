@@ -16,6 +16,19 @@ double vectorRAngle(double endX, double endY)
   return relativeAngle;
 }
 
+double vectorGAngle(double endX, double endY)
+{
+  //Finds X and Y difference from start to target
+  double vectorX = endX-globalX;
+  double vectorY = endY-globalY;
+
+  //Finds angle from 0 - 2pi of the vector from 0 (right on the x-axis)
+  double vectorGlobalAngle = angleWrap(atan2(vectorY, vectorX), RADIANS);
+
+  return vectorGlobalAngle;
+}
+
+
 double vectorLength(double endX, double endY)
 {
   //Finds X and Y difference from start to target
