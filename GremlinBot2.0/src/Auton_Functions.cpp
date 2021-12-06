@@ -17,7 +17,7 @@ int odomRuntime()
 void GoTo(double target_X, double target_Y, double timeout)
 {
   double initSec = second;
-  double begAngle = angleDeg;
+  double begAngle = angleRad;
   while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
   {
     Omni_Controller(vectorRAngle(target_X, target_Y), PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0), begAngle);
