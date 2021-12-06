@@ -10,8 +10,8 @@ double Mbr;
 void Omni_Controller(double relativeAngle, double speed, double startAngle)
 {
   //T finds Direction to move, R finds how much to prioritize rotation, and S finds speed
-  double T = relativeAngle + M_PI/2;
-  double R = angleDiffDir(angleDeg, startAngle) / 360;
+  double T = relativeAngle + startAngle;
+  double R = 0;
   double S = speed/200;
 
   //Power of each diagonal
