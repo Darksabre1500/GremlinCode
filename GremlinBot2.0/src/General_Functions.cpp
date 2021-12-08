@@ -25,7 +25,7 @@ double second = 0;
       Brain.Screen.setCursor(6, 1);
       Brain.Screen.print("Right Arm: %.2f%C", RArm.temperature(celsius));
       Brain.Screen.setCursor(7, 1);
-      Brain.Screen.print("Pringles Can: %.2f%C", Flipper.temperature(celsius));
+      Brain.Screen.print("Ring Motor: %.2f%C", RingCatcher.temperature(celsius));
       wait(5, sec);
     }
     return 0;
@@ -52,9 +52,6 @@ double second = 0;
       Brain.Screen.setCursor(11, 1);
       Brain.Screen.print("Encoder R Deg: ");
       Brain.Screen.print("%.2f", EncoderR.rotation(deg));
-      Brain.Screen.setCursor(12, 1);
-      Brain.Screen.print("Encoder S Deg: ");
-      Brain.Screen.print("%.2f", EncoderS.rotation(deg));
       wait(100, msec);
     }
     return 0;
@@ -151,7 +148,7 @@ double second = 0;
     return std::abs(target-actual);
   }
 
-  double angleDiff(double actual, double target)
+  double angleDiff(double actual, double target, angleType aType)
   {
     return 180 - std::abs(std::abs(actual - target) - 180);
   }

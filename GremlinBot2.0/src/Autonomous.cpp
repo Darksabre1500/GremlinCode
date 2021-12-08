@@ -52,10 +52,10 @@ void autonomous(void) {
 
   activateFlipper(25, 600, 2);
   task flipper(flipperTask);
-  GoTo(0, 48, 3);
+  GoTo(0, 48, 3, true);
   activateFlipper(45, 600, 1.75);
   task movingFlip(flipperTask3);
-  GoTo(-11, -3, 3);
+  GoTo(-11, -3, 3, true);
   TurnTo(0, 3);
   task flipper2(flipperTask2);
   GoTo2(17, 2, 200);

@@ -14,18 +14,20 @@ int odomRuntime()
 //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
 //If it times out, it will move on to the next function even if it still hasn't finished. 
 //Units are in inches and seconds respectivley.
-void GoTo(double target_X, double target_Y, double timeout)
+void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
 {
   double initSec = second;
-  double speed = PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0);
+  double speed = 0;
+  double pow = 0;
 
   while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
   {
-    double pow = std_Controller(target_X, target_Y, speed);
+    speed = PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0);
+    pow = std_Controller(target_X, target_Y, speed, facingFront);
 
     if (turning) {
       while(true){
-        pow = std_Controller(target_X, target_Y, speed);
+        pow = std_Controller(target_X, target_Y, speed, facingFront);
         
         LFM.spin(fwd, pow, rpm);
         RFM.spin(fwd, -pow, rpm);
@@ -95,7 +97,7 @@ void TurnTo(double target_angle, double timeout)
   while(std::abs(target_angle - angleDeg) > 3)
   {
     //std::cout << angleDiff(angleDeg, target_angle) << std::endl;
-    double pow = rotation_Controller(target_angle, PIDcontrol.PID(angleDiff(angleDeg, target_angle), 3, 0, 0, 0));
+    double pow = rotation_Controller(target_angle, PIDcontrol.PID(angleDiff(angleDeg, target_angle, DEGREES), 3, 0, 0, 0));
     LFM.spin(fwd, pow, rpm);
     RFM.spin(fwd, -pow, rpm);
     LBM.spin(fwd, pow, rpm);

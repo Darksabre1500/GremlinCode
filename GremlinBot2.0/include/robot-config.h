@@ -11,7 +11,6 @@ extern motor RFM;
 extern motor RBM;
 extern encoder EncoderL;
 extern encoder EncoderR;
-extern encoder EncoderS;
 extern motor LArm;
 extern motor RArm;
 extern motor Flipper;

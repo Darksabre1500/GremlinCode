@@ -7,34 +7,8 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-/*------------------------------Controller Scheme-------------------------------
-
-  - Left Joystick Up Down = Analog vertical movement
-  - Left Joystick Left Right = Analog strafe movement
-  - Right Joystick Left Right = Analog turn movement
-  
-------------------------------------------------------------------------------*/
-
 #include "vex.h"
 
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Controller2          controller                    
-// LFM                  motor         1               
-// LBM                  motor         2               
-// RFM                  motor         9               
-// RBM                  motor         19              
-// EncoderL             encoder       C, D            
-// EncoderR             encoder       A, B            
-// EncoderS             encoder       E, F            
-// LArm                 motor         3               
-// RArm                 motor         8               
-// Flipper              motor         10              
-// RingCatcher          motor         13              
-// FlipperAngle         potentiometer G            
-// ---- END VEXCODE CONFIGURED DEVICES ----
 
 using namespace vex;
 competition Competition;

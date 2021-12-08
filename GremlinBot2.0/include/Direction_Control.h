@@ -9,6 +9,6 @@ extern bool turning;
 
 void Omni_Controller(double relativeAngle, double speed, double startAngle);
 double rotation_Controller(double targetAngle, double speed);
-double std_Controller(double target_X, double target_Y, double speed);
+double std_Controller(double target_X, double target_Y, double speed, bool forward);
 
 #endif
