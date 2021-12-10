@@ -8,6 +8,7 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
+triport WExp = triport(PORT18);
 controller Controller1 = controller(primary);
 controller Controller2 = controller(partner);
 motor LFM = motor(PORT1, ratio18_1, false);
@@ -18,9 +19,13 @@ encoder EncoderL = encoder(Brain.ThreeWirePort.C);
 encoder EncoderR = encoder(Brain.ThreeWirePort.A);
 motor LArm = motor(PORT3, ratio36_1, true);
 motor RArm = motor(PORT8, ratio36_1, false);
-motor Flipper = motor(PORT10, ratio6_1, false);
 motor RingCatcher = motor(PORT13, ratio18_1, true);
-pot FlipperAngle = pot(Brain.ThreeWirePort.G);
+pot LArmRot = pot(Brain.ThreeWirePort.E);
+pot RArmRot = pot(Brain.ThreeWirePort.F);
+digital_out ClampPiston = digital_out(WExp.A);
+digital_out BackClamp = digital_out(WExp.B);
+digital_out LeftClamp = digital_out(WExp.C);
+digital_out RightClamp = digital_out(WExp.D);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

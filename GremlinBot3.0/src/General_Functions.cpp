@@ -90,20 +90,13 @@ double second = 0;
     std::cout << std::fixed << std::setprecision(2);
 
     while (true) {
-      std::cout << flipperAngle();
+      //std::cout << flipperAngle();
       std::cout << std::endl;
       wait(100, msec);
     }
     return 0;
   }
 
-  double flipperAngle(){
-    double output = (270 - FlipperAngle.value(vex::rotationUnits::deg)) - 72;
-    if (output < 0){
-      output = 0;
-    }
-    return output;
-  }
 //  
 
 //Conversions & Value Finders

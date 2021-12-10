@@ -16,7 +16,7 @@ int odomRuntime()
 //Units are in inches and seconds respectivley.
 void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
 {
-  double initSec = second;
+  TimeoutClock timer;
   double speed = 0;
   double pow = 0;
 
@@ -34,7 +34,7 @@ void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
         LBM.spin(fwd, pow, rpm);
         RBM.spin(fwd, -pow, rpm);
 
-        if (second - initSec > timeout)
+        if (timer.getTime() > timeout)
           break;
 
         else if (turning == false) {
@@ -54,7 +54,7 @@ void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
     LBM.spin(fwd, pow, rpm);
     RBM.spin(fwd, pow, rpm);
 
-    if (second - initSec > timeout)
+    if (timer.getTime() > timeout)
       break;
 
     wait(10, msec);
@@ -67,7 +67,7 @@ void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
 
 void GoTo2(double target_X, double target_Y, double timeout)
 {
-  double initSec = second;
+  TimeoutClock timer;
   double begAngle = angleRad;
   while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
   {
@@ -77,7 +77,7 @@ void GoTo2(double target_X, double target_Y, double timeout)
     LBM.spin(fwd, Mbl, rpm);
     RBM.spin(fwd, Mbr, rpm);
 
-    if (second - initSec > timeout)
+    if (timer.getTime() > timeout)
       break;
       
     wait(10, msec);
@@ -93,7 +93,7 @@ void GoTo2(double target_X, double target_Y, double timeout)
 //Units are in Degrees and Seconds.
 void TurnTo(double target_angle, double timeout)
 {
-  double initSec = second;
+  TimeoutClock timer;
   while(std::abs(target_angle - angleDeg) > 3)
   {
     //std::cout << angleDiff(angleDeg, target_angle) << std::endl;
@@ -103,7 +103,7 @@ void TurnTo(double target_angle, double timeout)
     LBM.spin(fwd, pow, rpm);
     RBM.spin(fwd, -pow, rpm);
 
-    if (second - initSec > timeout)
+    if (timer.getTime() > timeout)
       break;
 
     wait(10, msec);
@@ -131,43 +131,6 @@ void moveArm ( double rot, bool waitForRelease){
     LArm.startRotateTo(rot, deg, 200, rpm);
     RArm.startRotateTo(rot, deg, 200, rpm);
   }
-}
-
-//This function moves the "3rd arm" up and down. 
-//Speed is a rpm from 0 to 600. Positive moves the arm up, Negative moves it down.
-//Units are in Seconds.
-void moveFlipper (double time, double speed, directionType dir){
-
-  Flipper.spin(dir, speed, rpm);
-  wait(time * 1000, msec);
-  Flipper.stop(brake);
-
-}
-
-//This function moves the "3rd arm" up and down. The arm degree will reset to zero every time the function is called.
-//Speed is in rpm from 0 to 600. Positive moves the arm up, Negative moves it down.
-//If waitForRelease is set to false, the function will start moving the arm and then move on to the next function while still moving the arm.
-//Units are in Degrees & Rotations Per Minute.
-
-void activateFlipper (double rot, double speed, double timeout){
-  double initSec = second;
-  if (rot > flipperAngle()){
-    Flipper.spin(reverse, speed, rpm);
-    while(rot > flipperAngle()){
-      wait(1, msec);
-      if (second - initSec > timeout)
-        break;
-    }
-  }
-  else {
-    Flipper.spin(fwd, speed, rpm);
-    while(rot < flipperAngle()){
-      wait(1, msec);
-      if (second - initSec > timeout)
-        break;
-    }
-  }
-  Flipper.stop(brake);
 }
 
 void moveRings(double time, double speed, directionType dir){

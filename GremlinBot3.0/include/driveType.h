@@ -1,12 +1,10 @@
 #ifndef driveType_h
 #define driveType_h
 
-
-  void joystickValues();
   void drive(); 
   void Arm();
-  void moveFlipper();
   void moveRings();
+  void movePistons();
 
   
   extern int jValuesLFM;

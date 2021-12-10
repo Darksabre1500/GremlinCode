@@ -9,10 +9,15 @@
 
 #include "vex.h"
 
-
 using namespace vex;
 competition Competition;
 PIDClass PIDcontrol;
+Piston Clamp(ClampPiston);
+Piston BHook(BackClamp);
+Piston LHook(LeftClamp);
+Piston RHook(RightClamp);
+
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -47,9 +52,8 @@ int main() {
   task temps(tempuatureDisplay);
   task brainTB(brainDebug);
   task controllerTB(controllerDebug);
-  task timeout(timeoutClock);
   task odom(odomRuntime);
-  task terminal(TerminalDebug);
+  //task terminal(TerminalDebug);
 
 
   // Prevent main from exiting with an infinite loop.

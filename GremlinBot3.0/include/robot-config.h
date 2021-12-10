@@ -13,9 +13,14 @@ extern encoder EncoderL;
 extern encoder EncoderR;
 extern motor LArm;
 extern motor RArm;
-extern motor Flipper;
 extern motor RingCatcher;
-extern pot FlipperAngle;
+extern pot LArmRot;
+extern pot RArmRot;
+extern triport WExp;
+extern digital_out ClampPiston;
+extern digital_out BackClamp;
+extern digital_out LeftClamp;
+extern digital_out RightClamp;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
