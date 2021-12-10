@@ -22,7 +22,7 @@ double highestEncoderValue(bool index);
 double numCutoff(double num, double cutoff);
 double degToRadians(double deg);
 double radiansToDeg(double radian);
-double angleDiff(double actual, double target);
+double angleDiff(double actual, double target, angleType aType);
 double angleDiffDir(double actual, double target);
 double angleWrap(double angle, angleType aType);
 

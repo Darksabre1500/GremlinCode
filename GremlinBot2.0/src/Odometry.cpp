@@ -3,7 +3,6 @@
 //Starting conditions
 const double Wl = 7;
 const double Wr = 1.625;
-const double Ws = 6.125;
 const double startRot = degToRadians(90);
 const double startX = 0;
 const double startY = 0;
@@ -11,7 +10,6 @@ const double startY = 0;
 //Program variables
 static double prevL = 0;
 static double prevR = 0;
-static double prevS = 0;
 static double prevRot = startRot - M_PI/2;
 
 double globalX = startX;
@@ -35,41 +33,33 @@ void odometry()
   //Finds distance traveled since last check and converts it to inches
   double L = degToIn(EncoderL.position(deg) - prevL, 2.75);
   double R = degToIn(EncoderR.position(deg) - prevR, 2.75);
-  double S = degToIn(EncoderS.position(deg) - prevS, 2.75);
   //Saves Encoder Values for next check
   prevL = EncoderL.position(deg);
   prevR = EncoderR.position(deg);
-  prevS = EncoderS.position(deg);
 
   //Finds bot's angle of rotation
   double theta = (L-R)/(Wl+Wr);
 
   double dChord;
-  double sChord;
 
   if (theta != 0)
   {
     //Finds vector at the middle of the bot from starting position to ending position
-    dChord = 2 * sin(theta/2) * (R/theta + Wr);
-    sChord = 2 * sin(theta/2) * (S/theta + Ws);
-    
+    dChord = 2 * sin(theta/2) * (R/theta + Wr);    
   }
   else 
   {
     //Distance traveled in each direction
     dChord = (L+R)/2;
-    sChord = S;
   }
 
   //Converts vectors to local x and y deltas
   double dlocalX = dChord * sin(prevRot + theta/2);
-  double slocalX = sChord * cos(prevRot + theta/2);
   double dlocalY = dChord * cos(prevRot + theta/2);
-  double slocalY = sChord * sin(prevRot + theta/2);
 
   //Adds deltas to previous global coordinates
-  globalX += dlocalX + slocalX;
-  globalY += dlocalY + slocalY;
+  globalX += dlocalX;
+  globalY += dlocalY;
   //Updates angle of rotation
   prevRot += theta;
 }

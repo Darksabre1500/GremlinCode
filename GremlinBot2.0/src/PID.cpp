@@ -1,5 +1,7 @@
 #include "vex.h"
 
+//Add fast pid that slows down fast at the end
+
 double PIDClass::PID(double error, double kP, double kI, double kD, double integral_threshold) 
 {
   double maxValue = 200;

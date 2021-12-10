@@ -5,6 +5,8 @@ double Mfr;
 double Mbl;
 double Mbr;
 
+bool turning = false;
+
 //https://www.desmos.com/calculator/dadgckbr1z
 
 void Omni_Controller(double relativeAngle, double speed, double startAngle)
@@ -35,31 +37,33 @@ void Omni_Controller(double relativeAngle, double speed, double startAngle)
 
 }
 
-double Omni_Rotation(double targetAngle)
+double rotation_Controller(double targetAngle, double speed)
 {
   double dir = -1;
   if(sin(degToRadians(targetAngle) - angleRad) < 0)
     dir = 1;
-  return dir * PIDcontrol.PID(angleDiff(angleDeg, targetAngle), 3, 0, 0, 0);
+  return dir * speed;
 }
 
-/*void XDrive_Correction()
-{
-  double prevL = 0;
-  double prevR = 0;
-  double prevS = 0;
-  if(Controller1.Axis1.position() == 0)
-  {
-    double L = EncoderL.position(deg) - prevL;
-    double R = EncoderR.position(deg) - prevR;
-    double S = EncoderS.position(deg) - prevS;
-    //Saves Encoder Values for next check
-    prevL = EncoderL.position(deg);
-    prevR = EncoderR.position(deg);
-    prevS = EncoderS.position(deg);
-    
+double std_Controller(double target_X, double target_Y, double speed, bool forward) {
+  double dir = 0;
 
+  if (!forward)
+    dir = M_PI;
+  
+
+  if(vectorRAngle(target_X, target_Y) > 2.0){
+    turning = true;
+    double targetAngle = angleWrap(vectorGAngle(target_X, target_Y) + dir, RADIANS);
+    double rSpeed = PIDcontrol.PID(angleDiff(angleWrap(angleRad + dir, RADIANS), targetAngle, RADIANS), 3, 0, 0, 0);
+    return rotation_Controller(targetAngle, rSpeed);
   }
-
-
-}*/
+  
+  else { 
+    turning = false;
+    if (!forward)  
+      return -speed;
+    else 
+      return speed;
+  }
+}
