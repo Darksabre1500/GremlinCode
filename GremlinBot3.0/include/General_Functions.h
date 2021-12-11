@@ -28,17 +28,14 @@ class TimeoutClock
 {
 private:
   double initTime;
-  double time;
 
 public:
-  double getTime(){
-    time = (Brain.timer(msec) - initTime) / 1000.0;
-    return time;
+  double getTime(){;
+    return (Brain.timer(msec) - initTime) / 1000.0;
   }
 
   void resetTime(){
     initTime = Brain.timer(msec);
-    time = 0;
   }
 
   TimeoutClock(){

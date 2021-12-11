@@ -39,13 +39,13 @@ double second = 0;
       Brain.Screen.clearLine(11);
       Brain.Screen.clearLine(12);
       Brain.Screen.setCursor(8, 1);
-      Brain.Screen.print("EAngle: ");
-      Brain.Screen.print("%.2f", angleDeg);
+      Brain.Screen.print("Bot Angle: ");
+      Brain.Screen.print("%.2f", odom.getAngle(DEGREES));
       Brain.Screen.setCursor(9, 1);
       Brain.Screen.print("Global X: ");
-      Brain.Screen.print("%.2f", globalX);
+      Brain.Screen.print("%.2f", odom.getX());
       Brain.Screen.print(" | Global Y: ");
-      Brain.Screen.print("%.2f", globalY);
+      Brain.Screen.print("%.2f", odom.getY());
       Brain.Screen.setCursor(10, 1);
       Brain.Screen.print("Encoder L Deg: ");
       Brain.Screen.print("%.2f", EncoderL.rotation(deg));
@@ -149,7 +149,7 @@ double second = 0;
   double angleDiffDir(double actual, double target)
   {
     int dir = -1;
-    if(sin(degToRadians(target) - angleRad) < 0)
+    if(sin(degToRadians(target) - degToRadians(actual)) < 0)
       dir = 1;
     return dir * (180 - std::abs(std::abs(actual - target) - 180));
   }

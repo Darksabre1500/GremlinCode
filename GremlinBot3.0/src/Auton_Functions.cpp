@@ -1,16 +1,5 @@
 #include "vex.h"
 
-int odomRuntime()
-{
-  while(true){
-    odometry();
-    angleCalc();
-    wait(2, msec);
-  }
-  return 0;
-}
-
-
 //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
 //If it times out, it will move on to the next function even if it still hasn't finished. 
 //Units are in inches and seconds respectivley.
@@ -20,7 +9,7 @@ void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
   double speed = 0;
   double pow = 0;
 
-  while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
+  while(std::abs(target_Y-odom.getY()) > 1 || std::abs(target_X-odom.getX()) > 1)
   {
     speed = PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0);
     pow = std_Controller(target_X, target_Y, speed, facingFront);
@@ -65,39 +54,16 @@ void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
   RBM.stop(brake);
 }
 
-void GoTo2(double target_X, double target_Y, double timeout)
-{
-  TimeoutClock timer;
-  double begAngle = angleRad;
-  while(std::abs(target_Y-globalY) > 1 || std::abs(target_X-globalX) > 1)
-  {
-    Omni_Controller(vectorRAngle(target_X, target_Y), PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0), begAngle);
-    LFM.spin(fwd, Mfl, rpm);
-    RFM.spin(fwd, Mfr, rpm);
-    LBM.spin(fwd, Mbl, rpm);
-    RBM.spin(fwd, Mbr, rpm);
-
-    if (timer.getTime() > timeout)
-      break;
-      
-    wait(10, msec);
-  }
-  LFM.stop(brake);
-  RFM.stop(brake);
-  LBM.stop(brake);
-  RBM.stop(brake);
-}
-
 //This function turns the bot to the specified angle. The bot will start at 90 Degrees on startup.
 //It will always take the shortest route to the target angle.
 //Units are in Degrees and Seconds.
 void TurnTo(double target_angle, double timeout)
 {
   TimeoutClock timer;
-  while(std::abs(target_angle - angleDeg) > 3)
+  while(std::abs(target_angle - odom.getAngle(DEGREES)) > 3)
   {
-    //std::cout << angleDiff(angleDeg, target_angle) << std::endl;
-    double pow = rotation_Controller(target_angle, PIDcontrol.PID(angleDiff(angleDeg, target_angle, DEGREES), 3, 0, 0, 0));
+    //std::cout << angleDiff(odom.getAngle(DEGREES), target_angle) << std::endl;
+    double pow = rotation_Controller(target_angle, PIDcontrol.PID(angleDiff(odom.getAngle(DEGREES), target_angle, DEGREES), 3, 0, 0, 0));
     LFM.spin(fwd, pow, rpm);
     RFM.spin(fwd, -pow, rpm);
     LBM.spin(fwd, pow, rpm);

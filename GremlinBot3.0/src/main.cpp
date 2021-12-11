@@ -11,6 +11,7 @@
 
 using namespace vex;
 competition Competition;
+Odometry odom;
 PIDClass PIDcontrol;
 Piston Clamp(ClampPiston);
 Piston BHook(BackClamp);
@@ -52,7 +53,7 @@ int main() {
   task temps(tempuatureDisplay);
   task brainTB(brainDebug);
   task controllerTB(controllerDebug);
-  task odom(odomRuntime);
+  task updateOdometry(odometry);
   //task terminal(TerminalDebug);
 
 
