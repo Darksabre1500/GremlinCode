@@ -2,18 +2,41 @@
 #define PIDClass_h
 
 class PIDClass {
-public:
-  double PID(double error, double kP, double kI, double kD, double integral_threshold);
-  double proportionalFinal;
-  double integralFinal;
-  double derivativeFinal;
-  double finalSpeed;
-
 private:
+  double kP;
+  double kI;
+  double kD;
+
+  double proportional = 0;
+  double integral = 0;
+  double derivative = 0;
+
+  double proportionalFinal = 0;
+  double integralFinal = 0;
+  double derivativeFinal = 0;
+  
   double previous_error = 0;
-  double error;
-  double integral;
-  double derivative;
+  double finalSpeed = 0;
+
+public: 
+  void PID(double error);
+  void PID(double error, double iLimit);
+  void PID(double error, double iLimit, double powLimit);
+
+  PIDClass(double constP);
+  PIDClass(double constP, double constI);
+  PIDClass(double constP, double constI, double constD);
+
+  void editConstants(double constP, double constI, double constD);
+
+  double getPow(){
+    return finalSpeed;
+  }
+
+  //Add outputs for debugging
+  void sPrint();
+  void fullPrint();
+
 };
 
 #endif
