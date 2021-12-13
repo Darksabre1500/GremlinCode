@@ -1,36 +1,61 @@
 #include "vex.h"
 
-bool turning = false;
-
-//https://www.desmos.com/calculator/dadgckbr1z
-
-double rotation_Controller(double targetAngle, double speed)
-{
-  double dir = -1;
+void RotationController::updateSpeed(double PID){
+  int dir = -1;
   if(sin(degToRadians(targetAngle) - odom.getAngle(RADIANS)) < 0)
     dir = 1;
-  return dir * speed;
+  lSpeed = dir * PID;
+  rSpeed = -dir * PID;
 }
 
-double std_Controller(double target_X, double target_Y, double speed, bool forward) {
-  double dir = 0;
+void DriveController::updateSpeed(double TPID){
+  double angle = odom.getAngle(RADIANS);
 
   if (!forward)
-    dir = M_PI;
+    angle = angleWrap(odom.getAngle(RADIANS) + M_PI, RADIANS);
   
-
-  if(vectorRAngle(target_X, target_Y) > 2.0){
-    turning = true;
-    double targetAngle = angleWrap(vectorGAngle(target_X, target_Y) + dir, RADIANS);
-    double rSpeed = PIDcontrol.PID(angleDiff(angleWrap(odom.getAngle(RADIANS) + dir, RADIANS), targetAngle, RADIANS), 3, 0, 0, 0);
-    return rotation_Controller(targetAngle, rSpeed);
-  }
-  
-  else { 
-    turning = false;
-    if (!forward)  
-      return -speed;
+  if (!turning){
+    if (forward){  
+      lSpeed = TPID;
+      rSpeed = TPID;
+    }
     else 
-      return speed;
+      lSpeed = -TPID;
+      rSpeed = -TPID;
+  }
+  else{
+    if(vectorRAngle(targetX, targetY) >= 3.0){
+      RPID.PID(vectorRAngle(targetX, targetY));
+      rot.updateSpeed(RPID.getPow());
+      lSpeed = rot.getLPow();
+      rSpeed = rot.getRPow();
+    }
+    else{
+      turning = false;
+      lSpeed = 0;
+      rSpeed = 0;
+    }
   }
 }
+
+  DriveController::DriveController(double targetX, double targetY, PIDClass &PID){
+    this->targetX = targetX;
+    this->targetY = targetY;
+    forward = true;
+    if (vectorRAngle(targetX, targetY) >= 3.0){
+      turning = true;
+      RPID = PID;
+      rot.setAngle(vectorGAngle(targetX, targetY));
+    }
+  }
+
+  DriveController::DriveController(double targetX, double targetY, PIDClass &PID, bool forward){
+    this->targetX = targetX;
+    this->targetY = targetY;
+    this->forward = forward;
+    if (vectorRAngle(targetX, targetY) >= 3.0){
+      turning = true;
+      RPID = PID;
+      RotationController rot(vectorGAngle(targetX, targetY));
+    }
+  }

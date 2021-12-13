@@ -159,9 +159,9 @@ double second = 0;
     if (aType == RADIANS)
     {  
       if (angle < 0)
-        wrappedAngle += 2 * M_PI;
-      else if (angle > 2 * M_PI) 
-        wrappedAngle -= 2 * M_PI;
+        wrappedAngle += (2 * M_PI);
+      else if (angle > (2 * M_PI)) 
+        wrappedAngle -= (2 * M_PI);
     }
     else if (aType == DEGREES) 
     {

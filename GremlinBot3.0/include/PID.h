@@ -23,6 +23,7 @@ public:
   void PID(double error, double iLimit);
   void PID(double error, double iLimit, double powLimit);
 
+  PIDClass(){}
   PIDClass(double constP);
   PIDClass(double constP, double constI);
   PIDClass(double constP, double constI, double constD);

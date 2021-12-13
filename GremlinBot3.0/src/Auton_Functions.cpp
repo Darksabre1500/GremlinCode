@@ -1,6 +1,6 @@
 #include "vex.h"
 
-//This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
+/* //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
 //If it times out, it will move on to the next function even if it still hasn't finished. 
 //Units are in inches and seconds respectivley.
 void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
@@ -105,3 +105,4 @@ void moveRings(double time, double speed, directionType dir){
   RingCatcher.stop(brake);
 }
 
+ */
