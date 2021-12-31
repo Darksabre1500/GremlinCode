@@ -3,9 +3,9 @@
 
 class PIDClass {
 private:
-  double kP;
-  double kI;
-  double kD;
+  double kP = 0;
+  double kI = 0;
+  double kD = 0;
 
   double proportional = 0;
   double integral = 0;

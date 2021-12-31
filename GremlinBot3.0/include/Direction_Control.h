@@ -40,13 +40,15 @@ private:
 
   RotationController rot;
   PIDClass RPID;
+  PIDClass TPID;
+
 
 public:
  
-  DriveController(double targetX, double targetY, PIDClass &PID);
-  DriveController(double targetX, double targetY, PIDClass &PID, bool forward);
+  DriveController(double targetX, double targetY, PIDClass &PID1, PIDClass &PID2);
+  DriveController(double targetX, double targetY, PIDClass &PID1, PIDClass &PID2, bool forward);
 
-  void updateSpeed(double TPID);
+  void updateSpeed();
 
   double getLPow(){
     return lSpeed;

@@ -30,7 +30,7 @@ private:
   double initTime;
 
 public:
-  double getTime(){;
+  double getTime(){
     return (Brain.timer(msec) - initTime) / 1000.0;
   }
 

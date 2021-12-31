@@ -8,20 +8,16 @@ void RotationController::updateSpeed(double PID){
   rSpeed = -dir * PID;
 }
 
-void DriveController::updateSpeed(double TPID){
-  double angle = odom.getAngle(RADIANS);
-
-  if (!forward)
-    angle = angleWrap(odom.getAngle(RADIANS) + M_PI, RADIANS);
-  
+void DriveController::updateSpeed(){
   if (!turning){
+    TPID.PID(vectorLength(targetX, targetY));
     if (forward){  
-      lSpeed = TPID;
-      rSpeed = TPID;
+      lSpeed = TPID.getPow();
+      rSpeed = TPID.getPow();
     }
     else 
-      lSpeed = -TPID;
-      rSpeed = -TPID;
+      lSpeed = -TPID.getPow();
+      rSpeed = -TPID.getPow();
   }
   else{
     if(vectorRAngle(targetX, targetY) >= 3.0){
@@ -34,28 +30,35 @@ void DriveController::updateSpeed(double TPID){
       turning = false;
       lSpeed = 0;
       rSpeed = 0;
+      LFM.stop(brake);
+      RFM.stop(brake);
+      LBM.stop(brake);
+      RBM.stop(brake);
+      wait(0.25, sec);
     }
   }
 }
 
-  DriveController::DriveController(double targetX, double targetY, PIDClass &PID){
-    this->targetX = targetX;
-    this->targetY = targetY;
-    forward = true;
-    if (vectorRAngle(targetX, targetY) >= 3.0){
-      turning = true;
-      RPID = PID;
-      rot.setAngle(vectorGAngle(targetX, targetY));
-    }
+DriveController::DriveController(double targetX, double targetY, PIDClass &PID1, PIDClass &PID2){
+  this->targetX = targetX;
+  this->targetY = targetY;
+  forward = true;
+  if (vectorRAngle(targetX, targetY) >= 3.0){
+    turning = true;
+    RPID = PID1;
+    TPID = PID2;
+    rot.setAngle(vectorGAngle(targetX, targetY));
   }
+}
 
-  DriveController::DriveController(double targetX, double targetY, PIDClass &PID, bool forward){
-    this->targetX = targetX;
-    this->targetY = targetY;
-    this->forward = forward;
-    if (vectorRAngle(targetX, targetY) >= 3.0){
-      turning = true;
-      RPID = PID;
-      RotationController rot(vectorGAngle(targetX, targetY));
-    }
+DriveController::DriveController(double targetX, double targetY, PIDClass &PID1, PIDClass &PID2, bool forward){
+  this->targetX = targetX;
+  this->targetY = targetY;
+  this->forward = forward;
+  if (vectorRAngle(targetX, targetY) >= 3.0){
+    turning = true;
+    RPID = PID1;
+    TPID = PID2;
+    RotationController rot(vectorGAngle(targetX, targetY));
   }
+}

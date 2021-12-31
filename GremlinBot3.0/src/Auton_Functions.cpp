@@ -1,52 +1,28 @@
 #include "vex.h"
 
-/* //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
+ //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
 //If it times out, it will move on to the next function even if it still hasn't finished. 
 //Units are in inches and seconds respectivley.
 void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
 {
   TimeoutClock timer;
-  double speed = 0;
-  double pow = 0;
+  PIDClass RPID(3);
+  PIDClass TPID(16);
+  DriveController drive(target_X, target_Y, RPID, TPID, facingFront);
 
   while(std::abs(target_Y-odom.getY()) > 1 || std::abs(target_X-odom.getX()) > 1)
   {
-    speed = PIDcontrol.PID(vectorLength(target_X, target_Y), 16, 0, 0, 0);
-    pow = std_Controller(target_X, target_Y, speed, facingFront);
+    drive.updateSpeed();
 
-    if (turning) {
-      while(true){
-        pow = std_Controller(target_X, target_Y, speed, facingFront);
-        
-        LFM.spin(fwd, pow, rpm);
-        RFM.spin(fwd, -pow, rpm);
-        LBM.spin(fwd, pow, rpm);
-        RBM.spin(fwd, -pow, rpm);
-
-        if (timer.getTime() > timeout)
-          break;
-
-        else if (turning == false) {
-          LFM.stop(brake);
-          RFM.stop(brake);
-          LBM.stop(brake);
-          RBM.stop(brake);
-          wait(0.25, sec);
-          break;
-        }
-        wait(10, msec);
-      }
-    }
-
-    LFM.spin(fwd, pow, rpm);
-    RFM.spin(fwd, pow, rpm);
-    LBM.spin(fwd, pow, rpm);
-    RBM.spin(fwd, pow, rpm);
+    LFM.spin(fwd, drive.getLPow(), rpm);
+    LBM.spin(fwd, drive.getLPow(), rpm);
+    RFM.spin(fwd, drive.getRPow(), rpm);
+    RBM.spin(fwd, drive.getRPow(), rpm);
 
     if (timer.getTime() > timeout)
       break;
 
-    wait(10, msec);
+    wait(5, msec);
   }
   LFM.stop(brake);
   RFM.stop(brake);
@@ -60,14 +36,17 @@ void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
 void TurnTo(double target_angle, double timeout)
 {
   TimeoutClock timer;
+  PIDClass RPID(3);
+  RotationController Rot(target_angle);
   while(std::abs(target_angle - odom.getAngle(DEGREES)) > 3)
   {
-    //std::cout << angleDiff(odom.getAngle(DEGREES), target_angle) << std::endl;
-    double pow = rotation_Controller(target_angle, PIDcontrol.PID(angleDiff(odom.getAngle(DEGREES), target_angle, DEGREES), 3, 0, 0, 0));
-    LFM.spin(fwd, pow, rpm);
-    RFM.spin(fwd, -pow, rpm);
-    LBM.spin(fwd, pow, rpm);
-    RBM.spin(fwd, -pow, rpm);
+    RPID.PID(angleDiff(odom.getAngle(DEGREES), target_angle, DEGREES));
+    Rot.updateSpeed(RPID.getPow());
+    
+    LFM.spin(fwd, Rot.getLPow(), rpm);
+    LBM.spin(fwd, Rot.getLPow(), rpm);
+    RFM.spin(fwd, Rot.getRPow(), rpm);
+    RBM.spin(fwd, Rot.getRPow(), rpm);
 
     if (timer.getTime() > timeout)
       break;
@@ -105,4 +84,4 @@ void moveRings(double time, double speed, directionType dir){
   RingCatcher.stop(brake);
 }
 
- */
+ 
