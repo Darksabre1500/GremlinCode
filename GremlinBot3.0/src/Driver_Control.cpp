@@ -13,8 +13,9 @@
 void usercontrol(void) {
   while (1) {
       drive(); 
-      Arm(); 
+      moveArm(); 
       movePistons();
       moveRings();
+      haptics();
   }
 }

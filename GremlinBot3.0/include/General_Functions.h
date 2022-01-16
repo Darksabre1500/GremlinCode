@@ -84,18 +84,20 @@ class Piston
     Piston(digital_out &pistonPort){
       port = &pistonPort;
       opened = false;
+      port->set(opened);
     }
 
     Piston(digital_out &pistonPort, bool startPos){
       port = &pistonPort;
       opened = startPos;
+      port->set(opened);
     }
 };
 
 //Class Objects
-extern Piston Clamp;
-extern Piston BHook;
-extern Piston LHook;
-extern Piston RHook;
+extern Piston fClamp;
+extern Piston bClamp;
+
+
 
 #endif

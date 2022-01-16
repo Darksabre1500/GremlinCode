@@ -12,10 +12,8 @@
 using namespace vex;
 competition Competition;
 Odometry odom;
-Piston Clamp(ClampPiston);
-Piston BHook(BackClamp);
-Piston LHook(LeftClamp);
-Piston RHook(RightClamp);
+Piston fClamp(FClampPiston);
+Piston bClamp(BClampPiston);
 
 
 /*---------------------------------------------------------------------------*/

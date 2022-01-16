@@ -2,9 +2,10 @@
 #define driveType_h
 
   void drive(); 
-  void Arm();
+  void moveArm();
   void moveRings();
   void movePistons();
+  void haptics();
 
   
   extern int jValuesLFM;

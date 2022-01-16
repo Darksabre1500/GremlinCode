@@ -11,16 +11,15 @@ extern motor RFM;
 extern motor RBM;
 extern encoder EncoderL;
 extern encoder EncoderR;
-extern motor LArm;
-extern motor RArm;
-extern motor RingCatcher;
-extern pot LArmRot;
-extern pot RArmRot;
-extern triport WExp;
-extern digital_out ClampPiston;
-extern digital_out BackClamp;
-extern digital_out LeftClamp;
-extern digital_out RightClamp;
+extern motor RingConveyor;
+extern triport WireExpansion;
+extern digital_out FClampPiston;
+extern digital_out BClampPiston;
+extern encoder ArmEncoder;
+extern motor_group Arm;
+extern motor Flipper;
+extern distance Distance;
+extern bumper Bumper;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

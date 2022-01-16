@@ -60,28 +60,74 @@ void TurnTo(double target_angle, double timeout)
   
 }
 
+void driveTill(directionType dir, double speed, double timeout){
+  TimeoutClock timer;
+  LFM.spin(dir, speed, rpm);
+  LBM.spin(dir, speed, rpm);
+  RFM.spin(dir, speed, rpm);
+  RBM.spin(dir, speed, rpm);
+  if(dir == fwd || dir == forward){
+    waitUntil(Distance.objectDistance(inches) < 6.5 || timer.getTime() > timeout);
+  }
+  else {
+    waitUntil(Bumper.pressing() || timer.getTime() > timeout);
+  }
+  LFM.stop(brake);
+  RFM.stop(brake);
+  LBM.stop(brake);
+  RBM.stop(brake);
+}
+
+
 //This function moves the arm up and down. The arm degree will reset to zero every time the function is called.
 //Positive moves the arm up, Negative moves it down.
 //If waitForRelease is set to false, the function will start moving the arm and then move on to the next function while still moving the arm.
 //Units are in Degrees.
-void moveArm ( double rot, bool waitForRelease){
-  LArm.resetRotation();
-  RArm.resetRotation();
 
-  if (waitForRelease){
-    LArm.startRotateTo(rot, deg, 200, rpm);
-    RArm.rotateTo(rot, deg, 200, rpm);
+double armPos;
+
+int armMethod(){
+  if(armPos > ArmEncoder.rotation(deg)){
+    Arm.spin(fwd, 100, pct);
+    waitUntil(armPos <= ArmEncoder.rotation(deg));
   }
   else{
-    LArm.startRotateTo(rot, deg, 200, rpm);
-    RArm.startRotateTo(rot, deg, 200, rpm);
+    Arm.spin(reverse, 100, pct);
+    waitUntil(armPos >= ArmEncoder.rotation(deg));
+  }
+  Arm.stop(brake);
+  return 0;
+}
+
+void moveArm (double ArmPos, bool threaded){
+  armPos = ArmPos;
+  if(threaded){
+    task threadArm(armMethod);
+  }
+  else{
+    armMethod();
   }
 }
 
-void moveRings(double time, double speed, directionType dir){
-  RingCatcher.spin(dir, speed, rpm);
-  wait(time * 1000, msec);
-  RingCatcher.stop(brake);
+double ringTime;
+directionType ringDir;
+
+int ringMethod(){
+  RingConveyor.spin(ringDir, 180, rpm);
+  wait(ringTime, sec);
+  RingConveyor.stop(brake);
+  return 0;
+}
+
+void moveRings(double time, directionType dir, bool threaded){
+  ringTime = time;
+  ringDir = dir;
+  if(threaded){
+    task threadRings(ringMethod);
+  }
+  else{
+    ringMethod();
+  }
 }
 
  

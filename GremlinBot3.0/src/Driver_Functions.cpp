@@ -18,55 +18,59 @@ void drive() {
   }
 } 
 
-void Arm()
+void moveArm()
 {
   if (Controller1.ButtonL1.pressing() || Controller2.ButtonL1.pressing())
-  {
-    LArm.spin(fwd, 100, pct);
-    RArm.spin(fwd, 100, pct);
-  }
+    Arm.spin(fwd, 100, pct);
   else if (Controller1.ButtonL2.pressing() || Controller2.ButtonL2.pressing())
-  {
-    LArm.spin(reverse, 100, pct);
-    RArm.spin(reverse, 100, pct);
-  }
+    Arm.spin(reverse, 100, pct);
   else
-  {
-    LArm.stop(brake);
-    RArm.stop(brake);
-  } 
+    Arm.stop(brake);
 }
 
 void movePistons(){
-  if(Controller1.ButtonL1.pressing() && Clamp.timeSinceActive() >= 0.5)
-    Clamp.open();
-  else if (Controller1.ButtonL2.pressing() && Clamp.timeSinceActive() >= 0.5) 
-    Clamp.close();
+  if(Controller1.ButtonR1.pressing() && fClamp.timeSinceActive() >= 0.25)
+    fClamp.open();
+  else if (Controller1.ButtonR2.pressing() && fClamp.timeSinceActive() >= 0.25) 
+    fClamp.close();
 
-  if (Controller1.ButtonA.pressing() && BHook.timeSinceActive() >= 0.5) 
-    BHook.open();
-  else if (Controller1.ButtonB.pressing() && BHook.timeSinceActive() >= 0.5) 
-    BHook.close();
-
-  if (Controller1.ButtonX.pressing() && LHook.timeSinceActive() >= 0.5){
-    LHook.open();
-    RHook.open();
-  } 
-  else if (Controller1.ButtonY.pressing() && LHook.timeSinceActive() >= 0.5){
-    LHook.close();
-    RHook.close();
-  }
+  if (Controller1.ButtonA.pressing() && bClamp.timeSinceActive() >= 0.25) 
+    bClamp.open();
+  else if (Controller1.ButtonB.pressing() && bClamp.timeSinceActive() >= 0.25) 
+    bClamp.close();
 }
 
 
 void moveRings()
 {
   if (Controller1.ButtonUp.pressing() || Controller2.ButtonUp.pressing()){
-    RingCatcher.spin(fwd, 160, rpm);
+    RingConveyor.spin(fwd, 180, rpm);
   }
   else if (Controller1.ButtonDown.pressing() || Controller2.ButtonDown.pressing())
-    RingCatcher.spin(reverse, 160, rpm);
+    RingConveyor.spin(reverse, 180, rpm);
   else 
-    RingCatcher.stop(brake);
+    RingConveyor.stop(brake);
+}
+
+bool pressed;
+bool interrupted;
+
+void haptics(){
+  if (Bumper.pressing() && pressed == false){
+    Controller1.rumble(".");
+    pressed = true;
+    return;
+  }
+  else if (!Bumper.pressing() && pressed == true) {
+    pressed = false;
+  }
+
+  if (Distance.objectDistance(inches) < 6.5 && interrupted == false){
+    Controller1.rumble("..");
+    interrupted = true;
+  }
+  else if (Distance.objectDistance(inches) > 6.5 && interrupted == true) {
+    interrupted = true;
+  }
 }
 
