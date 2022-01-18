@@ -25,16 +25,16 @@ void moveArm()
   else if (Controller1.ButtonL2.pressing() || Controller2.ButtonL2.pressing())
     Arm.spin(reverse, 100, pct);
   else
-    Arm.stop(brake);
+    Arm.stop(hold);
 }
 
 void movePistons(){
-  if(Controller1.ButtonR1.pressing() && fClamp.timeSinceActive() >= 0.25)
+  if(Controller1.ButtonRight.pressing() && fClamp.timeSinceActive() >= 0.25)
     fClamp.open();
-  else if (Controller1.ButtonR2.pressing() && fClamp.timeSinceActive() >= 0.25) 
+  else if (Controller1.ButtonDown.pressing() && fClamp.timeSinceActive() >= 0.25) 
     fClamp.close();
 
-  if (Controller1.ButtonA.pressing() && bClamp.timeSinceActive() >= 0.25) 
+  if (Controller1.ButtonY.pressing() && bClamp.timeSinceActive() >= 0.25) 
     bClamp.open();
   else if (Controller1.ButtonB.pressing() && bClamp.timeSinceActive() >= 0.25) 
     bClamp.close();
@@ -43,10 +43,10 @@ void movePistons(){
 
 void moveRings()
 {
-  if (Controller1.ButtonUp.pressing() || Controller2.ButtonUp.pressing()){
+  if (Controller1.ButtonR1.pressing() || Controller2.ButtonR1.pressing()){
     RingConveyor.spin(fwd, 180, rpm);
   }
-  else if (Controller1.ButtonDown.pressing() || Controller2.ButtonDown.pressing())
+  else if (Controller1.ButtonR2.pressing() || Controller2.ButtonR2.pressing())
     RingConveyor.spin(reverse, 180, rpm);
   else 
     RingConveyor.stop(brake);
@@ -74,3 +74,11 @@ void haptics(){
   }
 }
 
+void flipper(){
+  if (Controller1.ButtonX.pressing())
+    Flipper.spin(fwd, 100, pct);
+  else if (Controller1.ButtonA.pressing())
+    Flipper.spin(reverse, 100, pct);
+  else 
+    Flipper.stop(brake);
+}

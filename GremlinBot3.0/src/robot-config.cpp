@@ -8,25 +8,25 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-triport WireExpansion = triport(PORT18);
+triport WireExpansion = triport(PORT10);
 controller Controller1 = controller(primary);
 controller Controller2 = controller(partner);
-motor LFM = motor(PORT1, ratio18_1, false);
-motor LBM = motor(PORT2, ratio18_1, true);
-motor RFM = motor(PORT9, ratio18_1, true);
+motor LFM = motor(PORT2, ratio18_1, true);
+motor LBM = motor(PORT1, ratio18_1, true);
+motor RFM = motor(PORT8, ratio18_1, false);
 motor RBM = motor(PORT19, ratio18_1, false);
-encoder EncoderL = encoder(Brain.ThreeWirePort.C);
-encoder EncoderR = encoder(Brain.ThreeWirePort.A);
-motor RingConveyor = motor(PORT13, ratio18_1, true);
-digital_out FClampPiston = digital_out(WireExpansion.A);
-digital_out BClampPiston = digital_out(WireExpansion.B);
-encoder ArmEncoder = encoder(WireExpansion.C);
-motor ArmMotorA = motor(PORT3, ratio36_1, false);
-motor ArmMotorB = motor(PORT4, ratio36_1, true);
+encoder EncoderL = encoder(Brain.ThreeWirePort.G);
+encoder EncoderR = encoder(WireExpansion.C);
+motor RingConveyor = motor(PORT20, ratio18_1, true);
+digital_out FClampPiston = digital_out(WireExpansion.E);
+digital_out BClampPiston = digital_out(Brain.ThreeWirePort.E);
+encoder ArmEncoder = encoder(WireExpansion.A);
+motor ArmMotorA = motor(PORT11, ratio36_1, false);
+motor ArmMotorB = motor(PORT5, ratio36_1, true);
 motor_group Arm = motor_group(ArmMotorA, ArmMotorB);
-motor Flipper = motor(PORT5, ratio18_1, false);
-distance Distance = distance(PORT6);
-bumper Bumper = bumper(WireExpansion.E);
+motor Flipper = motor(PORT6, ratio36_1, false);
+distance Distance = distance(PORT3);
+bumper Bumper = bumper(Brain.ThreeWirePort.A);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
