@@ -12,14 +12,11 @@
 
 void usercontrol(void) {
   while (1) {
-    //Gets the values of the joystick for each motor
-      joystickValues();
-    //Moves motors according to those values
       drive(); 
-    //Moves Arm
-      Arm(); 
-    //Moves secondary arm
-      moveFlipper();
+      moveArm(); 
+      movePistons();
       moveRings();
+      haptics();
+      flipper();
   }
 }

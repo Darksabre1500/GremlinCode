@@ -1,34 +1,12 @@
 #include "vex.h"
 
-//Starting conditions
-const double Wl = 7;
-const double Wr = 1.625;
-const double startRot = degToRadians(90);
-const double startX = 0;
-const double startY = 0;
-
-//Program variables
-static double prevL = 0;
-static double prevR = 0;
-static double prevRot = startRot - M_PI/2;
-
-double globalX = startX;
-double globalY = startY;
-
-double angleDeg = 90;
-double angleDegUnwrapped;
-double angleRad;
-double angleRadUnwrapped;
-
-//Add outfile
-
 //---------------------Odometry Resources---------------------
 //https://www.youtube.com/watch?v=_T6KHywSP58
 //http://thepilons.ca/wp-content/uploads/2018/10/Tracking.pdf
 //https://www.desmos.com/calculator/gdm0tikj1u
 //https://www.desmos.com/calculator/kzog7lvqlu
 
-void odometry()
+void Odometry::updateOdom()
 {
   //Finds distance traveled since last check and converts it to inches
   double L = degToIn(EncoderL.position(deg) - prevL, 2.75);
@@ -54,21 +32,29 @@ void odometry()
   }
 
   //Converts vectors to local x and y deltas
-  double dlocalX = dChord * sin(prevRot + theta/2);
-  double dlocalY = dChord * cos(prevRot + theta/2);
+  double dlocalX = dChord * sin(botRot + theta/2);
+  double dlocalY = dChord * cos(botRot + theta/2);
 
   //Adds deltas to previous global coordinates
   globalX += dlocalX;
   globalY += dlocalY;
   //Updates angle of rotation
-  prevRot += theta;
+  botRot += theta;
 }
 
-void angleCalc()
+void Odometry::updateAngle()
 {
   //Converts angle to have 0 on the x-axis and have counterclockwise be positive
-  angleRadUnwrapped = -(prevRot - (M_PI/2));
+  angleRadUnwrapped = -(botRot - startRot);
   angleRad = angleWrap(angleRadUnwrapped, RADIANS);
-  angleDegUnwrapped = radiansToDeg(angleRadUnwrapped);
   angleDeg = radiansToDeg(angleRad);
+}
+
+int odometry(){
+  while(true){
+  odom.updateOdom();
+  odom.updateAngle();
+  wait(5, msec);
+  }
+  return 0;
 }

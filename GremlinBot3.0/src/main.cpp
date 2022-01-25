@@ -9,10 +9,11 @@
 
 #include "vex.h"
 
-
 using namespace vex;
 competition Competition;
-PIDClass PIDcontrol;
+Odometry odom;
+
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -47,9 +48,8 @@ int main() {
   task temps(tempuatureDisplay);
   task brainTB(brainDebug);
   task controllerTB(controllerDebug);
-  task timeout(timeoutClock);
-  task odom(odomRuntime);
-  task terminal(TerminalDebug);
+  task updateOdometry(odometry);
+  //task terminal(TerminalDebug);
 
 
   // Prevent main from exiting with an infinite loop.
