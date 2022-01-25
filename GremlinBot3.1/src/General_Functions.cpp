@@ -58,6 +58,7 @@ double second = 0;
       Brain.Screen.print(" | Bumper :");      
       Brain.Screen.print("%s", Bumper.pressing() ? "On" : "Off");
       Brain.Screen.setCursor(11, 1);
+      Brain.Screen.print("Battery: ");
       Brain.Screen.print("%d", Brain.Battery.capacity());
       wait(100, msec);
     }

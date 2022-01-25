@@ -30,9 +30,9 @@ void moveArm()
 
 void movePistons(){
   if(Controller1.ButtonRight.pressing())
-    FClamp.set(true);
-  else if (Controller1.ButtonDown.pressing()) 
     FClamp.set(false);
+  else if (Controller1.ButtonDown.pressing()) 
+    FClamp.set(true);
 
   if (Controller1.ButtonY.pressing()) 
     BClamp.set(true);
