@@ -12,8 +12,6 @@
 using namespace vex;
 competition Competition;
 Odometry odom;
-//Piston fClamp(FClampPiston);
-//Piston bClamp(BClampPiston);
 
 
 /*---------------------------------------------------------------------------*/

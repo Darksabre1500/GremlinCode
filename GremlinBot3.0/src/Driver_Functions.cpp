@@ -29,15 +29,15 @@ void moveArm()
 }
 
 void movePistons(){
-  if(Controller1.ButtonRight.pressing() && fClamp.timeSinceActive() >= 0.25)
-    fClamp.open();
-  else if (Controller1.ButtonDown.pressing() && fClamp.timeSinceActive() >= 0.25) 
-    fClamp.close();
+  if(Controller1.ButtonRight.pressing())
+    FClamp.set(true);
+  else if (Controller1.ButtonDown.pressing()) 
+    FClamp.set(false);
 
-  if (Controller1.ButtonY.pressing() && bClamp.timeSinceActive() >= 0.25) 
-    bClamp.open();
-  else if (Controller1.ButtonB.pressing() && bClamp.timeSinceActive() >= 0.25) 
-    bClamp.close();
+  if (Controller1.ButtonY.pressing()) 
+    BClamp.set(true);
+  else if (Controller1.ButtonB.pressing()) 
+    BClamp.set(false);
 }
 
 

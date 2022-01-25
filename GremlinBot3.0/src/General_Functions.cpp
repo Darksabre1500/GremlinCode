@@ -88,15 +88,6 @@ double second = 0;
     }
     return 0;
   }
-
-  int timeoutClock() {
-    while(true) {
-      wait(100, msec);
-      second += 0.1;
-    }
-    return 0;
-  }
-
   
   int TerminalDebug() 
   {

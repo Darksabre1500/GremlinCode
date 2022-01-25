@@ -3,8 +3,13 @@
  //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
 //If it times out, it will move on to the next function even if it still hasn't finished. 
 //Units are in inches and seconds respectivley.
-void GoTo(double target_X, double target_Y, double timeout, bool facingFront)
+void GoTo(double target_X, double target_Y, double timeout, coordType coordinates, bool facingFront = true)
 {
+  if (coordinates == RELATIVE){
+    target_X += odom.getX();
+    target_Y += odom.getY();
+  }
+
   TimeoutClock timer;
   PIDClass RPID(3);
   PIDClass TPID(16);
