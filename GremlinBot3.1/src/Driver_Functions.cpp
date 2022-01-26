@@ -40,19 +40,32 @@ void movePistons(){
     BClamp.set(false);
 }
 
+bool conveyorOn;
+bool pressing;
 
 void moveRings()
 {
-  if (Controller1.ButtonR1.pressing() || Controller2.ButtonR1.pressing()){
-    RingConveyor.spin(fwd, 180, rpm);
+  if (Controller1.ButtonR1.pressing()){
+    if(!pressing){
+      conveyorOn = !conveyorOn;
+      pressing = true;
+    }
   }
-  else if (Controller1.ButtonR2.pressing() || Controller2.ButtonR2.pressing())
-    RingConveyor.spin(reverse, 180, rpm);
-  else 
+  else {
+    pressing = false;
+  }
+
+  if (Controller1.ButtonR2.pressing()){
+    RingConveyor.spin(reverse, 140, rpm);
+  }
+  else if (conveyorOn) {
+    RingConveyor.spin(fwd, 140, rpm);
+  }
+  else if (!conveyorOn) {
     RingConveyor.stop(brake);
+  }
 }
 
-bool pressed;
 bool interrupted;
 
 void haptics(){
