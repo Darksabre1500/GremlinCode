@@ -56,21 +56,12 @@ bool pressed;
 bool interrupted;
 
 void haptics(){
-  if (Bumper.pressing() && pressed == false){
+  if (Distance.objectDistance(inches) < 2.5 && interrupted == false){
     Controller1.rumble(".");
-    pressed = true;
-    return;
-  }
-  else if (!Bumper.pressing() && pressed == true) {
-    pressed = false;
-  }
-
-  if (Distance.objectDistance(inches) < 6.5 && interrupted == false){
-    Controller1.rumble("..");
     interrupted = true;
   }
-  else if (Distance.objectDistance(inches) > 6.5 && interrupted == true) {
-    interrupted = true;
+  else if (Distance.objectDistance(inches) > 2.5 && interrupted == true) {
+    interrupted = false;
   }
 }
 

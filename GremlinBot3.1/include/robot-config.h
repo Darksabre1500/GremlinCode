@@ -19,7 +19,6 @@ extern encoder ArmEncoder;
 extern motor_group Arm;
 extern motor Flipper;
 extern distance Distance;
-extern bumper Bumper;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

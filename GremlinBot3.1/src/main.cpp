@@ -1,24 +1,3 @@
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Controller2          controller                    
-// LFM                  motor         2               
-// LBM                  motor         4               
-// RFM                  motor         8               
-// RBM                  motor         19              
-// EncoderL             encoder       G, H            
-// EncoderR             encoder       C, D            
-// RingConveyor         motor         20              
-// WireExpansion        triport       10              
-// FClamp               digital_out   E               
-// BClamp               digital_out   E               
-// ArmEncoder           encoder       A, B            
-// Arm                  motor_group   11, 5           
-// Flipper              motor         6               
-// Distance             distance      3               
-// Bumper               bumper        A               
-// ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
@@ -31,6 +10,7 @@
 #include "vex.h"
 
 using namespace vex;
+using namespace std;
 competition Competition;
 Odometry odom;
 

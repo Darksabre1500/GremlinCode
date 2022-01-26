@@ -39,7 +39,6 @@
 #include "Direction_Control.h"
 
 //User Added Stuff---------------------------------------------------------------
-  //using namespace vex;
   extern competition Competition;
   extern PIDClass PIDcontrol;
   void autonomous();

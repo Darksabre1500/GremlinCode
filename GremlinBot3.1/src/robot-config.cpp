@@ -26,7 +26,6 @@ motor ArmMotorB = motor(PORT5, ratio36_1, true);
 motor_group Arm = motor_group(ArmMotorA, ArmMotorB);
 motor Flipper = motor(PORT6, ratio36_1, false);
 distance Distance = distance(PORT3);
-bumper Bumper = bumper(Brain.ThreeWirePort.A);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

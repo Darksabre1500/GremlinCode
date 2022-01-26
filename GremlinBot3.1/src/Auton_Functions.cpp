@@ -71,11 +71,8 @@ void driveTill(directionType dir, double speed, double timeout){
   LBM.spin(dir, speed, rpm);
   RFM.spin(dir, speed, rpm);
   RBM.spin(dir, speed, rpm);
-  if(dir == fwd || dir == forward){
+  if(dir == fwd){
     waitUntil(Distance.objectDistance(inches) < 6.5 || timer.getTime() > timeout);
-  }
-  else {
-    waitUntil(Bumper.pressing() || timer.getTime() > timeout);
   }
   LFM.stop(brake);
   RFM.stop(brake);

@@ -1,4 +1,5 @@
 #include "vex.h"
+using namespace std;
 
 double second = 0;
 
@@ -9,6 +10,8 @@ double second = 0;
       Brain.Screen.clearLine(2);
       Brain.Screen.clearLine(3);
       Brain.Screen.clearLine(4);
+      Brain.Screen.clearLine(5);
+      Brain.Screen.clearLine(6);
       Brain.Screen.setCursor(1, 1);
       Brain.Screen.print("LFM Temp: %.2f%C", LFM.temperature(celsius));
       Brain.Screen.print(" | RFM Temp: %.2f%C", RFM.temperature(celsius));
@@ -21,6 +24,9 @@ double second = 0;
       Brain.Screen.setCursor(4, 1);
       Brain.Screen.print("Flipper Temp: %.2f%C", Flipper.temperature(celsius));
       Brain.Screen.setCursor(5, 1);
+      Brain.Screen.print("Battery: ");
+      Brain.Screen.print("%d", Brain.Battery.capacity());
+      Brain.Screen.setCursor(6, 1);
       Brain.Screen.print("------------------------------------------------");
       wait(5, sec);
     }
@@ -29,37 +35,31 @@ double second = 0;
 
   int brainDebug() {
     while(true){
-      Brain.Screen.clearLine(6);
       Brain.Screen.clearLine(7);
       Brain.Screen.clearLine(8);
       Brain.Screen.clearLine(9);
       Brain.Screen.clearLine(10);
       Brain.Screen.clearLine(11);
       Brain.Screen.clearLine(12);
-      Brain.Screen.setCursor(6, 1);
+      Brain.Screen.setCursor(7, 1);
       Brain.Screen.print("Bot Angle: ");
       Brain.Screen.print("%.2f", odom.getAngle(DEGREES));
-      Brain.Screen.setCursor(7, 1);
+      Brain.Screen.setCursor(8, 1);
       Brain.Screen.print("Global X: ");
       Brain.Screen.print("%.2f", odom.getX());
       Brain.Screen.print(" | Global Y: ");
       Brain.Screen.print("%.2f", odom.getY());
-      Brain.Screen.setCursor(8, 1);
+      Brain.Screen.setCursor(9, 1);
       Brain.Screen.print("Encoder L: ");
       Brain.Screen.print("%.2f", EncoderL.rotation(deg));
       Brain.Screen.print(" | Encoder R: ");
       Brain.Screen.print("%.2f", EncoderR.rotation(deg));
-      Brain.Screen.setCursor(9, 1);
+      Brain.Screen.setCursor(10, 1);
       Brain.Screen.print("Arm Encoder: ");      
       Brain.Screen.print("%.2f", ArmEncoder.rotation(deg));
-      Brain.Screen.setCursor(10, 1);
+      Brain.Screen.setCursor(11, 1);
       Brain.Screen.print("Distance :");      
       Brain.Screen.print(" %.2f", Distance.objectDistance(inches));
-      Brain.Screen.print(" | Bumper :");      
-      Brain.Screen.print("%s", Bumper.pressing() ? "On" : "Off");
-      Brain.Screen.setCursor(11, 1);
-      Brain.Screen.print("Battery: ");
-      Brain.Screen.print("%d", Brain.Battery.capacity());
       wait(100, msec);
     }
     return 0;
@@ -85,18 +85,18 @@ double second = 0;
       else if(Brain.Battery.capacity() < 20){
         Controller1.rumble("-..-..-");
       }
-      wait(5, sec);
+      wait(10, sec);
     }
     return 0;
   }
   
   int TerminalDebug() 
   {
-    std::cout << std::fixed << std::setprecision(2);
+    cout << fixed << setprecision(2);
 
     while (true) {
-      //std::cout << flipperAngle();
-      std::cout << std::endl;
+      //cout << flipperAngle();
+      cout << endl;
       wait(100, msec);
     }
     return 0;
@@ -143,12 +143,12 @@ double second = 0;
 
   double numberDiff(double actual, double target)
   {
-    return std::abs(target-actual);
+    return abs(target-actual);
   }
 
   double angleDiff(double actual, double target, angleType aType)
   {
-    return 180 - std::abs(std::abs(actual - target) - 180);
+    return 180 - abs(abs(actual - target) - 180);
   }
 
   double angleDiffDir(double actual, double target)
@@ -156,7 +156,7 @@ double second = 0;
     int dir = -1;
     if(sin(degToRadians(target) - degToRadians(actual)) < 0)
       dir = 1;
-    return dir * (180 - std::abs(std::abs(actual - target) - 180));
+    return dir * (180 - abs(abs(actual - target) - 180));
   }
 
   double angleWrap(double angle, angleType aType){
