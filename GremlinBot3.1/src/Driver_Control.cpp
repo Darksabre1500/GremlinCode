@@ -17,6 +17,5 @@ void usercontrol(void) {
       movePistons();
       moveRings();
       haptics();
-      flipper();
   }
 }

@@ -6,8 +6,5 @@
   void moveRings();
   void movePistons();
   void haptics();
-  void flipper();
-
-
 
 #endif

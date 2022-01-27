@@ -22,11 +22,9 @@ double second = 0;
       Brain.Screen.print("Arm Temp: %.2f%C", Arm.temperature(celsius));
       Brain.Screen.print(" | Ring Temp: %.2f%C", RingConveyor.temperature(celsius));
       Brain.Screen.setCursor(4, 1);
-      Brain.Screen.print("Flipper Temp: %.2f%C", Flipper.temperature(celsius));
-      Brain.Screen.setCursor(5, 1);
       Brain.Screen.print("Battery: ");
       Brain.Screen.print("%d", Brain.Battery.capacity());
-      Brain.Screen.setCursor(6, 1);
+      Brain.Screen.setCursor(5, 1);
       Brain.Screen.print("------------------------------------------------");
       wait(5, sec);
     }
@@ -35,29 +33,30 @@ double second = 0;
 
   int brainDebug() {
     while(true){
+      Brain.Screen.clearLine(6);
       Brain.Screen.clearLine(7);
       Brain.Screen.clearLine(8);
       Brain.Screen.clearLine(9);
       Brain.Screen.clearLine(10);
       Brain.Screen.clearLine(11);
       Brain.Screen.clearLine(12);
-      Brain.Screen.setCursor(7, 1);
+      Brain.Screen.setCursor(6, 1);
       Brain.Screen.print("Bot Angle: ");
       Brain.Screen.print("%.2f", odom.getAngle(DEGREES));
-      Brain.Screen.setCursor(8, 1);
+      Brain.Screen.setCursor(7, 1);
       Brain.Screen.print("Global X: ");
       Brain.Screen.print("%.2f", odom.getX());
       Brain.Screen.print(" | Global Y: ");
       Brain.Screen.print("%.2f", odom.getY());
-      Brain.Screen.setCursor(9, 1);
+      Brain.Screen.setCursor(8, 1);
       Brain.Screen.print("Encoder L: ");
       Brain.Screen.print("%.2f", EncoderL.rotation(deg));
       Brain.Screen.print(" | Encoder R: ");
       Brain.Screen.print("%.2f", EncoderR.rotation(deg));
-      Brain.Screen.setCursor(10, 1);
+      Brain.Screen.setCursor(9, 1);
       Brain.Screen.print("Arm Encoder: ");      
       Brain.Screen.print("%.2f", ArmEncoder.rotation(deg));
-      Brain.Screen.setCursor(11, 1);
+      Brain.Screen.setCursor(10, 1);
       Brain.Screen.print("Distance :");      
       Brain.Screen.print(" %.2f", Distance.objectDistance(inches));
       wait(100, msec);
@@ -83,7 +82,7 @@ double second = 0;
         Controller1.rumble(". . .");
       }
       else if(Brain.Battery.capacity() < 20){
-        Controller1.rumble("-..-..-");
+        Controller1.rumble("-.-.-");
       }
       wait(10, sec);
     }

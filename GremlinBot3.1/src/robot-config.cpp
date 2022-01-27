@@ -24,7 +24,6 @@ encoder ArmEncoder = encoder(WireExpansion.A);
 motor ArmMotorA = motor(PORT11, ratio36_1, false);
 motor ArmMotorB = motor(PORT5, ratio36_1, true);
 motor_group Arm = motor_group(ArmMotorA, ArmMotorB);
-motor Flipper = motor(PORT6, ratio36_1, false);
 distance Distance = distance(PORT3);
 
 // VEXcode generated functions

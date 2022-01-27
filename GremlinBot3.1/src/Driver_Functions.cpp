@@ -20,9 +20,9 @@ void drive() {
 
 void moveArm()
 {
-  if (Controller1.ButtonL1.pressing() || Controller2.ButtonL1.pressing())
+  if (Controller1.ButtonL1.pressing())
     Arm.spin(fwd, 100, pct);
-  else if (Controller1.ButtonL2.pressing() || Controller2.ButtonL2.pressing())
+  else if (Controller1.ButtonL2.pressing())
     Arm.spin(reverse, 100, pct);
   else
     Arm.stop(hold);
@@ -70,19 +70,10 @@ bool interrupted;
 
 void haptics(){
   if (Distance.objectDistance(inches) < 2.5 && interrupted == false){
-    Controller1.rumble(".");
+    Controller1.rumble("-");
     interrupted = true;
   }
   else if (Distance.objectDistance(inches) > 2.5 && interrupted == true) {
     interrupted = false;
   }
-}
-
-void flipper(){
-  if (Controller1.ButtonX.pressing())
-    Flipper.spin(fwd, 100, pct);
-  else if (Controller1.ButtonA.pressing())
-    Flipper.spin(reverse, 100, pct);
-  else 
-    Flipper.stop(brake);
 }
