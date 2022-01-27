@@ -19,34 +19,14 @@ void DriveController::updateSpeed(){
       lSpeed = -TPID.getPow();
       rSpeed = -TPID.getPow();
   }
-  else{
-    if(vectorRAngle(targetX, targetY) >= 3.0){
-      RPID.PID(vectorRAngle(targetX, targetY));
-      rot.updateSpeed(RPID.getPow());
-      lSpeed = rot.getLPow();
-      rSpeed = rot.getRPow();
-    }
-    else{
-      turning = false;
-      lSpeed = 0;
-      rSpeed = 0;
-      LFM.stop(brake);
-      RFM.stop(brake);
-      LBM.stop(brake);
-      RBM.stop(brake);
-    }
-  }
 }
 
-DriveController::DriveController(double targetX, double targetY, PIDClass &PID1, PIDClass &PID2){
+DriveController::DriveController(double targetX, double targetY, PIDClass &PID1){
   this->targetX = targetX;
   this->targetY = targetY;
   forward = true;
-  if (vectorRAngle(targetX, targetY) >= 3.0){
-    turning = true;
-    RPID = PID1;
-    TPID = PID2;
-    rot.setAngle(vectorGAngle(targetX, targetY));
+  TPID = PID1;
+  rot.setAngle(vectorGAngle(targetX, targetY));
   }
 }
 
