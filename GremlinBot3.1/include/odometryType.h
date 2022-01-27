@@ -25,9 +25,9 @@ private:
   double globalX = startX;
   double globalY = startY;
 
+  double angleRadUnwrapped;
   double angleDeg;
   double angleRad;
-  double angleRadUnwrapped;
 
   public:
 

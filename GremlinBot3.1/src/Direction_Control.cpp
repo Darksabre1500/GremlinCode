@@ -34,7 +34,6 @@ void DriveController::updateSpeed(){
       RFM.stop(brake);
       LBM.stop(brake);
       RBM.stop(brake);
-      wait(0.25, sec);
     }
   }
 }

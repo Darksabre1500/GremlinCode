@@ -42,7 +42,7 @@ double second = 0;
       Brain.Screen.clearLine(12);
       Brain.Screen.setCursor(6, 1);
       Brain.Screen.print("Bot Angle: ");
-      Brain.Screen.print("%.2f", odom.getAngle(RADIANS));
+      Brain.Screen.print("%.2f", odom.getAngle(DEGREES));
       Brain.Screen.setCursor(7, 1);
       Brain.Screen.print("Global X: ");
       Brain.Screen.print("%.2f", odom.getX());
@@ -159,19 +159,19 @@ double second = 0;
   }
 
   double angleWrap(double angle, angleType aType){
-    double d;
-    int divisor;
     if (aType == RADIANS)
-    {  
-      d = angle / (2 * M_PI);
-      divisor = static_cast<int>(d);
-      angle -= (2 * M_PI) * divisor; 
+    { 
+      if (angle < 0) 
+        angle = fmod(angle, 2 * M_PI) + 2*M_PI;
+      else
+        angle = fmod(angle, 2 * M_PI);
     }
     else if (aType == DEGREES) 
     {
-      d = angle / 360;
-      divisor = static_cast<int>(d);
-      angle -= 360 * divisor; 
+      if (angle < 0) 
+        angle = fmod(angle, 360) + 360;
+      else
+        angle = fmod(angle, 360); 
     }  
     return angle;
   }
