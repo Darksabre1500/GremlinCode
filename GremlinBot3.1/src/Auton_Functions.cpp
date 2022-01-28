@@ -18,10 +18,10 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
   }
   TimeoutClock timer;
 
-  PIDClass RPID(4);
+  PIDClass RPID(1.15);
   RotationController Rot(radiansToDeg(vectorGAngle(target_X, target_Y)), RPID);
 
-  while(angleDiff(odom.getAngle(DEGREES), radiansToDeg(vectorGAngle(target_X, target_Y)), DEGREES) > 3)
+  while(angleDiff(odom.getAngle(DEGREES), radiansToDeg(vectorGAngle(target_X, target_Y)), DEGREES) > 5)
   {
     Rot.updateSpeed();
     
@@ -37,11 +37,13 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
 
     wait(5, msec);
   }
+  stopMotors();
+  wait(0.25, sec);
 
-  PIDClass TPID(20);
+  PIDClass TPID(16);
   DriveController drive(target_X, target_Y, TPID, facingFront);
 
-  while(vectorLength(target_X, target_Y) > 2)
+  while(vectorLength(target_X, target_Y) > 4)
   {
     drive.updateSpeed();
 

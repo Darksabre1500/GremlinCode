@@ -18,6 +18,6 @@ Flipper Vals : -14 rev from purpendicular line start
 
 void autonomous(void) {
 
-  GoTo(10, 10, 3, ABSOLUTE);
+  GoTo(15, 15, 5, ABSOLUTE);
 
 } 
