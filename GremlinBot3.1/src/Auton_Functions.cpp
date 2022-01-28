@@ -101,6 +101,24 @@ void driveTill(directionType dir, double speed, double timeout){
   stopMotors();
 }
 
+void driveTill(double speed, double timeout, double limitX, double limitY, coordType coordinates){
+  if (coordinates == RELATIVE){
+    limitX += odom.getX();
+    limitY += odom.getY();
+  }
+  TimeoutClock timer;
+
+  LFM.spin(fwd, speed, rpm);
+  LBM.spin(fwd, speed, rpm);
+  RFM.spin(fwd, speed, rpm);
+  RBM.spin(fwd, speed, rpm);
+  while(Distance.objectDistance(inches) > 2.5 && timer.getTime() < timeout){
+    if (std::abs(limitX - odom.getX()) < 2 || std::abs(limitY - odom.getY()) < 2)
+      break;
+  }
+  stopMotors();
+}
+
 //This function turns the bot to the specified angle. The bot will start at 90 Degrees on startup.
 //It will always take the shortest route to the target angle.
 //Units are in Degrees and Seconds.

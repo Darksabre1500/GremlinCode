@@ -54,7 +54,7 @@ int odometry(){
   while(true){
   odom.updateOdom();
   odom.updateAngle();
-  wait(5, msec);
+  wait(2, msec);
   }
   return 0;
 }
