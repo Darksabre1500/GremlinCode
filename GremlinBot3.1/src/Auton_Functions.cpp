@@ -7,6 +7,13 @@
     RBM.stop(brake);
   }
 
+  double botAngle(bool flipped){
+    if (flipped)
+      return angleWrap(odom.getAngle(DEGREES) + 180, DEGREES);
+    else
+      return odom.getAngle(DEGREES);
+  }
+
  //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
 //If it times out, it will move on to the next function even if it still hasn't finished. 
 //Units are in inches and seconds respectivley.
@@ -21,7 +28,10 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
   PIDClass RPID(1.15);
   RotationController Rot(radiansToDeg(vectorGAngle(target_X, target_Y)), RPID);
 
-  while(angleDiff(odom.getAngle(DEGREES), radiansToDeg(vectorGAngle(target_X, target_Y)), DEGREES) > 5)
+
+
+
+  while(angleDiff(botAngle(!facingFront), radiansToDeg(vectorGAngle(target_X, target_Y)), DEGREES) > 5)
   {
     Rot.updateSpeed();
     
@@ -91,30 +101,28 @@ void GoToStraight(double target_X, double target_Y, double timeout, coordType co
   stopMotors();
 }
 
-void driveTill(directionType dir, double speed, double timeout){
+void driveTill(double speedL, double speedR, double timeout){
   TimeoutClock timer;
-  LFM.spin(dir, speed, rpm);
-  LBM.spin(dir, speed, rpm);
-  RFM.spin(dir, speed, rpm);
-  RBM.spin(dir, speed, rpm);
-  if(dir == fwd){
-    waitUntil(Distance.objectDistance(inches) < 2.5 || timer.getTime() > timeout);
-  }
+  LFM.spin(fwd, speedL, rpm);
+  LBM.spin(fwd, speedL, rpm);
+  RFM.spin(fwd, speedR, rpm);
+  RBM.spin(fwd, speedR, rpm);
+  waitUntil(Distance.objectDistance(inches) < 3.5 || timer.getTime() > timeout);
   stopMotors();
 }
 
-void driveTill(double speed, double timeout, double limitX, double limitY, coordType coordinates){
+void driveTill(double speedL, double speedR, double timeout, double limitX, double limitY, coordType coordinates){
   if (coordinates == RELATIVE){
     limitX += odom.getX();
     limitY += odom.getY();
   }
   TimeoutClock timer;
 
-  LFM.spin(fwd, speed, rpm);
-  LBM.spin(fwd, speed, rpm);
-  RFM.spin(fwd, speed, rpm);
-  RBM.spin(fwd, speed, rpm);
-  while(Distance.objectDistance(inches) > 2.5 && timer.getTime() < timeout){
+  LFM.spin(fwd, speedL, rpm);
+  LBM.spin(fwd, speedL, rpm);
+  RFM.spin(fwd, speedR, rpm);
+  RBM.spin(fwd, speedR, rpm);
+  while(Distance.objectDistance(inches) > 3.5 && timer.getTime() < timeout){
     if (std::abs(limitX - odom.getX()) < 2 || std::abs(limitY - odom.getY()) < 2)
       break;
   }

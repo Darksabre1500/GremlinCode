@@ -33,3 +33,16 @@ DriveController::DriveController(double targetX, double targetY, PIDClass &PID1,
   this->forward = forward;
   TPID = PID1;
 }
+
+void straightDrive(int &initRPow, int &initLPow){
+  PIDClass PID(0.125);
+
+  if (EncoderL.rotation(deg) > EncoderR.rotation(deg)){
+    PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
+    initLPow *= PID.getPow(); 
+  }
+  else if (EncoderL.rotation(deg) < EncoderR.rotation(deg)){
+    PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
+    initRPow *= PID.getPow(); 
+  }
+}

@@ -28,34 +28,57 @@ void moveArm()
     Arm.stop(hold);
 }
 
-void movePistons(){
-  if(Controller1.ButtonRight.pressing())
-    FClamp.set(false);
-  else if (Controller1.ButtonDown.pressing()) 
-    FClamp.set(true);
+bool fClampOn;
+bool bClampOn;
+bool pressingR1;
+bool pressingR2;
 
-  if (Controller1.ButtonY.pressing()) 
+void movePistons(){
+  if (Controller1.ButtonR1.pressing()){
+    if(!pressingR1){
+      fClampOn = !fClampOn;
+      pressingR1 = true;
+    }
+  }
+  else {
+    pressingR1 = false;
+  }
+  if (Controller1.ButtonR2.pressing()){
+    if(!pressingR2){
+      bClampOn = !fClampOn;
+      pressingR2 = true;
+    }
+  }
+  else {
+    pressingR2 = false;
+  }
+
+  if(fClampOn)
+    FClamp.set(false);
+  else 
+    FClamp.set(true);
+  if(bClampOn)
     BClamp.set(true);
-  else if (Controller1.ButtonB.pressing()) 
+  else 
     BClamp.set(false);
 }
 
 bool conveyorOn;
-bool pressing;
+bool pressingX;
 
 void moveRings()
 {
-  if (Controller1.ButtonR1.pressing()){
-    if(!pressing){
+  if (Controller1.ButtonX.pressing()){
+    if(!pressingX){
       conveyorOn = !conveyorOn;
-      pressing = true;
+      pressingX = true;
     }
   }
   else {
-    pressing = false;
+    pressingX = false;
   }
 
-  if (Controller1.ButtonR2.pressing()){
+  if (Controller1.ButtonB.pressing()){
     RingConveyor.spin(reverse, 140, rpm);
   }
   else if (conveyorOn) {
@@ -69,11 +92,11 @@ void moveRings()
 bool interrupted;
 
 void haptics(){
-  if (Distance.objectDistance(inches) < 2.5 && interrupted == false){
+  if (Distance.objectDistance(inches) < 3.5 && interrupted == false){
     Controller1.rumble("-");
     interrupted = true;
   }
-  else if (Distance.objectDistance(inches) > 2.5 && interrupted == true) {
+  else if (Distance.objectDistance(inches) > 3.5 && interrupted == true) {
     interrupted = false;
   }
 }
