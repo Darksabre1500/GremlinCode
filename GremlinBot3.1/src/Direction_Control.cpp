@@ -36,14 +36,19 @@ DriveController::DriveController(double targetX, double targetY, PIDClass &PID1,
 
 void str8Drive(double &initRPow, double &initLPow){
   //Bigger this is, the slower the motor will go
-  PIDClass PID(0.0023507);
+  PIDClass PID(0.005);
+  double edited;
 
   if (EncoderL.rotation(deg) > EncoderR.rotation(deg)){
     PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
-    initLPow *= (1/PID.getPow()); 
+    edited = initLPow * (1 - PID.getPow());
+    std::cout << "InitL: " << initLPow << " PID: " << PID.getPow() << " Final: " << edited << std::endl;
+    initLPow = edited;
   }
   else if (EncoderL.rotation(deg) < EncoderR.rotation(deg)){
     PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
-    initRPow *= (1/PID.getPow()); 
+    edited = initRPow * (1 - PID.getPow());
+    std::cout << "InitR: " << initRPow << " PID: " << PID.getPow() << "Final: " << edited << std::endl;
+    initRPow = edited;
   }
 }

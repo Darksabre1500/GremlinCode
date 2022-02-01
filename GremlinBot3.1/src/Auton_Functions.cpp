@@ -8,9 +8,9 @@
   }
 
   double botAngle(bool flipped){
-    if (flipped)
+    if (flipped == false)
       return angleWrap(odom.getAngle(DEGREES) + 180, DEGREES);
-    else
+    else 
       return odom.getAngle(DEGREES);
   }
 
@@ -28,7 +28,7 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
   PIDClass RPID(1.15);
   RotationController Rot(radiansToDeg(vectorGAngle(target_X, target_Y)), RPID);
 
-  while(angleDiff(botAngle(!facingFront), radiansToDeg(vectorGAngle(target_X, target_Y)), DEGREES) > 5)
+  while(angleDiff(botAngle(facingFront), radiansToDeg(vectorGAngle(target_X, target_Y)), DEGREES) > 5)
   {
     Rot.updateSpeed();
     
@@ -50,7 +50,7 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
 
   //------------------------------------------------------------
 
-  PIDClass TPID(16);
+  PIDClass TPID(12);
   DriveController drive(target_X, target_Y, TPID, facingFront);
   double lPow;
   double rPow;
@@ -60,7 +60,7 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
     drive.updateSpeed();
     rPow = drive.getPow();
     lPow = drive.getPow();
-    str8Drive(rPow, lPow);
+    //str8Drive(rPow, lPow);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
@@ -78,25 +78,21 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
   stopMotors();
 }
 
-void GoToStraight(double target_X, double target_Y, double timeout, coordType coordinates, bool facingFront)
+void GoToStraight(double distance, double timeout, bool facingFront)
 {
-  if (coordinates == RELATIVE){
-    target_X += odom.getX();
-    target_Y += odom.getY();
-  }
 
   TimeoutClock timer;
-  PIDClass TPID(16);
-  DriveController drive(target_X, target_Y, TPID, facingFront);
+  PIDClass TPID(12);
+  DriveController drive(coordFinderX(distance, botAngle(facingFront)), coordFinderY(distance, botAngle(facingFront)), TPID, facingFront);
   double lPow;
   double rPow;
 
-  while(vectorLength(target_X, target_Y) > 4)
+  while(vectorLength(coordFinderX(distance, botAngle(facingFront)), coordFinderY(distance, botAngle(facingFront))) > 4)
   {
     drive.updateSpeed();
     rPow = drive.getPow();
     lPow = drive.getPow();
-    str8Drive(rPow, lPow);
+    //str8Drive(rPow, lPow);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
@@ -209,7 +205,7 @@ int armMethod(){
     Arm.spin(reverse, 100, pct);
     waitUntil(armPos >= ArmEncoder.rotation(deg));
   }
-  Arm.stop(brake);
+  Arm.stop(hold);
   return 0;
 }
 
