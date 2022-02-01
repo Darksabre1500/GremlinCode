@@ -45,7 +45,7 @@ void movePistons(){
   }
   if (Controller1.ButtonR2.pressing()){
     if(!pressingR2){
-      bClampOn = !fClampOn;
+      bClampOn = !bClampOn;
       pressingR2 = true;
     }
   }
