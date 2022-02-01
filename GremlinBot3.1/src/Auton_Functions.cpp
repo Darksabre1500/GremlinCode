@@ -28,9 +28,6 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
   PIDClass RPID(1.15);
   RotationController Rot(radiansToDeg(vectorGAngle(target_X, target_Y)), RPID);
 
-
-
-
   while(angleDiff(botAngle(!facingFront), radiansToDeg(vectorGAngle(target_X, target_Y)), DEGREES) > 5)
   {
     Rot.updateSpeed();
@@ -50,17 +47,25 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
   stopMotors();
   wait(0.25, sec);
 
+
+  //------------------------------------------------------------
+
   PIDClass TPID(16);
   DriveController drive(target_X, target_Y, TPID, facingFront);
+  double lPow;
+  double rPow;
 
   while(vectorLength(target_X, target_Y) > 4)
   {
     drive.updateSpeed();
+    rPow = drive.getPow();
+    lPow = drive.getPow();
+    str8Drive(rPow, lPow);
 
-    LFM.spin(fwd, drive.getPow(), rpm);
-    LBM.spin(fwd, drive.getPow(), rpm);
-    RFM.spin(fwd, drive.getPow(), rpm);
-    RBM.spin(fwd, drive.getPow(), rpm);
+    LFM.spin(fwd, lPow, rpm);
+    LBM.spin(fwd, lPow, rpm);
+    RFM.spin(fwd, rPow, rpm);
+    RBM.spin(fwd, rPow, rpm);
 
     if (timer.getTime() > timeout){
       stopMotors();
@@ -81,50 +86,82 @@ void GoToStraight(double target_X, double target_Y, double timeout, coordType co
   }
 
   TimeoutClock timer;
-  PIDClass TPID(20);
+  PIDClass TPID(16);
   DriveController drive(target_X, target_Y, TPID, facingFront);
+  double lPow;
+  double rPow;
 
-  while(vectorLength(target_X, target_Y) > 2)
+  while(vectorLength(target_X, target_Y) > 4)
   {
     drive.updateSpeed();
+    rPow = drive.getPow();
+    lPow = drive.getPow();
+    str8Drive(rPow, lPow);
 
-    LFM.spin(fwd, drive.getPow(), rpm);
-    LBM.spin(fwd, drive.getPow(), rpm);
-    RFM.spin(fwd, drive.getPow(), rpm);
-    RBM.spin(fwd, drive.getPow(), rpm);
+    LFM.spin(fwd, lPow, rpm);
+    LBM.spin(fwd, lPow, rpm);
+    RFM.spin(fwd, rPow, rpm);
+    RBM.spin(fwd, rPow, rpm);
 
-    if (timer.getTime() > timeout)
-      break;
+    if (timer.getTime() > timeout){
+      stopMotors();
+      return;
+    }
 
     wait(5, msec);
   }
   stopMotors();
 }
 
-void driveTill(double speedL, double speedR, double timeout){
+void driveTill(double timeout){
   TimeoutClock timer;
-  LFM.spin(fwd, speedL, rpm);
-  LBM.spin(fwd, speedL, rpm);
-  RFM.spin(fwd, speedR, rpm);
-  RBM.spin(fwd, speedR, rpm);
-  waitUntil(Distance.objectDistance(inches) < 3.5 || timer.getTime() > timeout);
+  double lPow = 200;
+  double rPow = 200;
+
+  while(Distance.objectDistance(inches) > 3.5)
+  {
+    str8Drive(rPow, lPow);
+
+    LFM.spin(fwd, lPow, rpm);
+    LBM.spin(fwd, lPow, rpm);
+    RFM.spin(fwd, rPow, rpm);
+    RBM.spin(fwd, rPow, rpm);
+
+    if (timer.getTime() > timeout){
+      stopMotors();
+      return;
+    }
+
+    wait(5, msec);
+  }
   stopMotors();
 }
 
-void driveTill(double speedL, double speedR, double timeout, double limitX, double limitY, coordType coordinates){
+void driveTill(double timeout, double limitX, double limitY, coordType coordinates){
   if (coordinates == RELATIVE){
     limitX += odom.getX();
     limitY += odom.getY();
   }
-  TimeoutClock timer;
 
-  LFM.spin(fwd, speedL, rpm);
-  LBM.spin(fwd, speedL, rpm);
-  RFM.spin(fwd, speedR, rpm);
-  RBM.spin(fwd, speedR, rpm);
-  while(Distance.objectDistance(inches) > 3.5 && timer.getTime() < timeout){
-    if (std::abs(limitX - odom.getX()) < 2 || std::abs(limitY - odom.getY()) < 2)
-      break;
+  TimeoutClock timer;
+  double lPow = 200;
+  double rPow = 200;
+
+  while(Distance.objectDistance(inches) > 3.5)
+  {
+    str8Drive(rPow, lPow);
+
+    LFM.spin(fwd, lPow, rpm);
+    LBM.spin(fwd, lPow, rpm);
+    RFM.spin(fwd, rPow, rpm);
+    RBM.spin(fwd, rPow, rpm);
+
+    if (timer.getTime() > timeout || (std::abs(limitX - odom.getX()) < 2 || std::abs(limitY - odom.getY()) < 2)){
+      stopMotors();
+      return;
+    }
+
+    wait(5, msec);
   }
   stopMotors();
 }

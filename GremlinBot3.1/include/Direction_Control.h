@@ -2,6 +2,8 @@
 #define Direction_Control_h
 #include "PID.h"
 
+void str8Drive(double &initRPow, double &initLPow);
+
 class RotationController{
 private:
   double targetAngle = 0;

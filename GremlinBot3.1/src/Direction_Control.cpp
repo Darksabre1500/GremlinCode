@@ -34,15 +34,16 @@ DriveController::DriveController(double targetX, double targetY, PIDClass &PID1,
   TPID = PID1;
 }
 
-void straightDrive(int &initRPow, int &initLPow){
-  PIDClass PID(0.125);
+void str8Drive(double &initRPow, double &initLPow){
+  //Bigger this is, the slower the motor will go
+  PIDClass PID(0.0023507);
 
   if (EncoderL.rotation(deg) > EncoderR.rotation(deg)){
     PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
-    initLPow *= PID.getPow(); 
+    initLPow *= (1/PID.getPow()); 
   }
   else if (EncoderL.rotation(deg) < EncoderR.rotation(deg)){
     PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
-    initRPow *= PID.getPow(); 
+    initRPow *= (1/PID.getPow()); 
   }
 }

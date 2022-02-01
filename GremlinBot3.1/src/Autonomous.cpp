@@ -17,7 +17,7 @@ Flipper Vals : -14 rev from purpendicular line start
 */
 
 void autonomous(void) {
-  driveTill(150, 200, 5);
+  driveTill(5);
   FClamp.set(false);
   wait(0.25, sec);
   GoTo(0, -10, 3, RELATIVE, false);
