@@ -82,7 +82,7 @@ void GoToStraight(double distance, double timeout, bool facingFront)
 {
 
   TimeoutClock timer;
-  PIDClass TPID(12);
+  PIDClass TPID(4);
   DriveController drive(coordFinderX(distance, botAngle(facingFront)), coordFinderY(distance, botAngle(facingFront)), TPID, facingFront);
   double lPow;
   double rPow;

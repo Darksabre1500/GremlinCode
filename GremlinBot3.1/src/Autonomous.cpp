@@ -22,6 +22,6 @@ void autonomous(void) {
   FClamp.set(false);
   wait(0.25, sec);
   moveArm(7, false);
-  GoToStraight(20, 3, false);
+  GoToStraight(10, 3, false);
 
 } 
