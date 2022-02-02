@@ -5,7 +5,7 @@ void drive() {
   int leftPow = numCutoff(Controller1.Axis3.position(pct) + Controller1.Axis1.position(pct), 100);
 
   if (Controller1.Axis3.position(pct) != 0 || Controller1.Axis1.position(pct) != 0){
-    LFM.spin(fwd, leftPow, pct);
+    LFM.spin(fwd, leftPow , pct);
     RFM.spin(fwd, rightPow, pct);
     LBM.spin(fwd, leftPow, pct);
     RBM.spin(fwd, rightPow, pct);

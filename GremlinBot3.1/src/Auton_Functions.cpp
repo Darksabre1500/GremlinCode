@@ -17,7 +17,7 @@
  //This function moves the bot to the specified coordinates. The bot will always start at 0, 0 on startup. 
 //If it times out, it will move on to the next function even if it still hasn't finished. 
 //Units are in inches and seconds respectivley.
-void GoTo(double target_X, double target_Y, double timeout, coordType coordinates, bool facingFront)
+void GoTo(double target_X, double target_Y, double PID, double timeout, coordType coordinates, bool facingFront)
 {
   if (coordinates == RELATIVE){
     target_X += odom.getX();
@@ -50,7 +50,7 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
 
   //------------------------------------------------------------
 
-  PIDClass TPID(8);
+  PIDClass TPID(PID);
   DriveController drive(target_X, target_Y, TPID, facingFront);
   double lPow;
   double rPow;
@@ -60,7 +60,7 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
     drive.updateSpeed();
     rPow = drive.getPow();
     lPow = drive.getPow();
-    //str8Drive(rPow, lPow);
+    str8Drive(rPow, lPow, facingFront);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
@@ -78,11 +78,11 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
   stopMotors();
 }
 
-void GoToStraight(double distance, double timeout, bool facingFront)
+void GoToStraight(double distance, double PID, double timeout, bool facingFront)
 {
 
   TimeoutClock timer;
-  PIDClass TPID(12);
+  PIDClass TPID(PID);
   DriveController drive(coordFinderX(distance, botAngle(facingFront)), coordFinderY(distance, botAngle(facingFront)), TPID, facingFront);
   double lPow;
   double rPow;
@@ -93,7 +93,7 @@ void GoToStraight(double distance, double timeout, bool facingFront)
     drive.updateSpeed();
     rPow = drive.getPow();
     lPow = drive.getPow();
-    //str8Drive(rPow, lPow);
+    str8Drive(rPow, lPow, facingFront);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
@@ -105,7 +105,7 @@ void GoToStraight(double distance, double timeout, bool facingFront)
       return;
     }
 
-    wait(5, msec);
+    wait(10, msec);
   }
   stopMotors();
 }
@@ -117,7 +117,7 @@ void driveTill(double timeout){
 
   while(Distance.objectDistance(inches) > 3.5)
   {
-    str8Drive(rPow, lPow);
+    //str8Drive(rPow, lPow);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
@@ -146,7 +146,7 @@ void driveTill(double timeout, double limitX, double limitY, coordType coordinat
 
   while(Distance.objectDistance(inches) > 3.5)
   {
-    str8Drive(rPow, lPow);
+    //str8Drive(rPow, lPow);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);

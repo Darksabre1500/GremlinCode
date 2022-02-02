@@ -17,11 +17,11 @@ Flipper Vals : -14 rev from purpendicular line start
 */
 
 void autonomous(void) {
-  GoToStraight(42, 5, true);
+  GoToStraight(42, 8, 5, true);
   wait(0.25, sec);
   FClamp.set(false);
   wait(0.25, sec);
   moveArm(3, true);
-  GoToStraight(30, 5, false);
+  GoToStraight(30, 8, 5, false);
 
 } 

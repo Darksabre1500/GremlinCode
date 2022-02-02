@@ -34,21 +34,38 @@ DriveController::DriveController(double targetX, double targetY, PIDClass &PID1,
   TPID = PID1;
 }
 
-void str8Drive(double &initRPow, double &initLPow){
+void str8Drive(double &initRPow, double &initLPow, bool fwd){
   //Bigger this is, the slower the motor will go
-  PIDClass PID(0.005);
+  PIDClass PID(0.004);
   double edited;
 
-  if (EncoderL.rotation(deg) > EncoderR.rotation(deg)){
-    PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
-    edited = initLPow * (1 - PID.getPow());
-    std::cout << "InitL: " << initLPow << " PID: " << PID.getPow() << " Final: " << edited << std::endl;
-    initLPow = edited;
+  if (fwd){
+    if (EncoderL.rotation(deg) > EncoderR.rotation(deg)){
+      PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
+      edited = initLPow * (1 - PID.getPow());
+      std::cout << "InitL: " << initLPow << " PID: " << PID.getPow() << " Final: " << edited << std::endl;
+      initLPow = edited;
+    }
+    else if (EncoderL.rotation(deg) < EncoderR.rotation(deg)){
+      PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
+      edited = initRPow * (1 - PID.getPow());
+      std::cout << "InitR: " << initRPow << " PID: " << PID.getPow() << "Final: " << edited << std::endl;
+      initRPow = edited;
+    }
   }
-  else if (EncoderL.rotation(deg) < EncoderR.rotation(deg)){
-    PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
-    edited = initRPow * (1 - PID.getPow());
-    std::cout << "InitR: " << initRPow << " PID: " << PID.getPow() << "Final: " << edited << std::endl;
-    initRPow = edited;
+  else {
+    if (EncoderL.rotation(deg) < EncoderR.rotation(deg)){
+      PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
+      edited = initLPow * (1 + PID.getPow());
+      std::cout << "InitL: " << initLPow << " PID: " << PID.getPow() << " Final: " << edited << std::endl;
+      initLPow = edited;
+    }
+    else if (EncoderL.rotation(deg) > EncoderR.rotation(deg)){
+      PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
+      edited = initRPow * (1 + PID.getPow());
+      std::cout << "InitR: " << initRPow << " PID: " << PID.getPow() << "Final: " << edited << std::endl;
+      initRPow = edited;
+    }
   }
+
 }
