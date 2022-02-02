@@ -24,6 +24,8 @@ void GoTo(double target_X, double target_Y, double PID, double timeout, coordTyp
     target_Y += odom.getY();
   }
   TimeoutClock timer;
+  double initRRot = EncoderR.rotation(deg);
+  double initLRot = EncoderL.rotation(deg);
 
   PIDClass RPID(1.15);
   RotationController Rot(radiansToDeg(vectorGAngle(target_X, target_Y)), RPID);
@@ -60,7 +62,7 @@ void GoTo(double target_X, double target_Y, double PID, double timeout, coordTyp
     drive.updateSpeed();
     rPow = drive.getPow();
     lPow = drive.getPow();
-    str8Drive(rPow, lPow, facingFront);
+    str8Drive(rPow, lPow, facingFront, initLRot, initRRot);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
@@ -86,14 +88,15 @@ void GoToStraight(double distance, double PID, double timeout, bool facingFront)
   DriveController drive(coordFinderX(distance, botAngle(facingFront)), coordFinderY(distance, botAngle(facingFront)), TPID, facingFront);
   double lPow;
   double rPow;
-  double initRot = EncoderR.rotation(deg);
+  double initRRot = EncoderR.rotation(deg);
+  double initLRot = EncoderL.rotation(deg);
 
-  while(distance - degToIn(std::abs(EncoderR.rotation(deg) - initRot), 2.75) > 3)
+  while(distance - degToIn(std::abs(EncoderR.rotation(deg) - initRRot), 2.75) > 3)
   {
     drive.updateSpeed();
     rPow = drive.getPow();
     lPow = drive.getPow();
-    str8Drive(rPow, lPow, facingFront);
+    str8Drive(rPow, lPow, facingFront, initLRot, initRRot);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
@@ -170,7 +173,7 @@ void TurnTo(double target_angle, double timeout)
 {
 
   TimeoutClock timer;
-  PIDClass RPID(4);
+  PIDClass RPID(1.15);
   RotationController Rot(target_angle, RPID);
 
   while(angleDiff(odom.getAngle(DEGREES), target_angle, DEGREES) > 3)
@@ -224,7 +227,7 @@ double ringTime;
 directionType ringDir;
 
 int ringMethod(){
-  RingConveyor.spin(ringDir, 180, rpm);
+  RingConveyor.spin(ringDir, 100, rpm);
   wait(ringTime, sec);
   RingConveyor.stop(brake);
   return 0;
