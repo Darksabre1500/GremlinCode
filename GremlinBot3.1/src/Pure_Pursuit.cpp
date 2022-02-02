@@ -35,3 +35,11 @@ double vectorLength(double endX, double endY)
 
   return vectorL;
 }
+
+double coordFinderX(double distance, double angle){
+  return odom.getX() + (distance * cos(angle)); 
+}
+
+double coordFinderY(double distance, double angle){
+  return odom.getY() + (distance * sin(angle)); 
+}

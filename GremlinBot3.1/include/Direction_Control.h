@@ -2,23 +2,26 @@
 #define Direction_Control_h
 #include "PID.h"
 
+void str8Drive(double &initRPow, double &initLPow, bool fwd, double initLEnc, double initREnc);
+
 class RotationController{
 private:
   double targetAngle = 0;
   double lSpeed = 0;
   double rSpeed = 0;
+  PIDClass RPID;
   
 public:
-  RotationController(){}
-  RotationController(double targetAngle){
+  RotationController(double targetAngle, PIDClass &PID){
     this->targetAngle = targetAngle;
+    RPID = PID;
   }
 
   void setAngle(double angle){
     targetAngle = angle;
   }
 
-  void updateSpeed(double PID);
+  void updateSpeed();
 
   double getLPow(){
     return lSpeed;
@@ -30,31 +33,24 @@ public:
 
 class DriveController{
 private:
-  bool turning;
   bool forward;
   
-  double lSpeed = 0;
-  double rSpeed = 0;
+  double speed = 0;
   double targetX;
   double targetY;
 
-  RotationController rot;
-  PIDClass RPID;
   PIDClass TPID;
 
 
 public:
  
-  DriveController(double targetX, double targetY, PIDClass &PID1, PIDClass &PID2);
-  DriveController(double targetX, double targetY, PIDClass &PID1, PIDClass &PID2, bool forward);
+  DriveController(double targetX, double targetY, PIDClass &PID1);
+  DriveController(double targetX, double targetY, PIDClass &PID1, bool forward);
 
   void updateSpeed();
 
-  double getLPow(){
-    return lSpeed;
-  }
-  double getRPow(){
-    return rSpeed;
+  double getPow(){
+    return speed;
   }
 };
 
