@@ -12,9 +12,9 @@ triport WireExpansion = triport(PORT10);
 controller Controller1 = controller(primary);
 controller Controller2 = controller(partner);
 motor LFM = motor(PORT2, ratio18_1, true);
-motor LBM = motor(PORT4, ratio18_1, true);
-motor RFM = motor(PORT8, ratio18_1, false);
-motor RBM = motor(PORT19, ratio18_1, false);
+motor LBM = motor(PORT19, ratio18_1, true);
+motor RFM = motor(PORT6, ratio18_1, false);
+motor RBM = motor(PORT8, ratio18_1, false);
 encoder EncoderL = encoder(Brain.ThreeWirePort.G);
 encoder EncoderR = encoder(WireExpansion.C);
 motor RingConveyor = motor(PORT20, ratio18_1, false);
@@ -24,7 +24,7 @@ encoder ArmEncoder = encoder(WireExpansion.A);
 motor ArmMotorA = motor(PORT11, ratio36_1, false);
 motor ArmMotorB = motor(PORT5, ratio36_1, true);
 motor_group Arm = motor_group(ArmMotorA, ArmMotorB);
-distance Distance = distance(PORT3);
+distance Distance = distance(PORT15);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

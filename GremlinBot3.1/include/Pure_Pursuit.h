@@ -4,5 +4,6 @@
 double vectorRAngle(double endX, double endY);
 double vectorGAngle(double endX, double endY);
 double vectorLength(double endX, double endY);
-
+double coordFinderX(double distance, double angle);
+double coordFinderY(double distance, double angle);
 #endif
