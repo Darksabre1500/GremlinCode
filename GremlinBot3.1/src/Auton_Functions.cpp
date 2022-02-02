@@ -50,7 +50,7 @@ void GoTo(double target_X, double target_Y, double timeout, coordType coordinate
 
   //------------------------------------------------------------
 
-  PIDClass TPID(12);
+  PIDClass TPID(8);
   DriveController drive(target_X, target_Y, TPID, facingFront);
   double lPow;
   double rPow;
@@ -82,12 +82,13 @@ void GoToStraight(double distance, double timeout, bool facingFront)
 {
 
   TimeoutClock timer;
-  PIDClass TPID(4);
+  PIDClass TPID(12);
   DriveController drive(coordFinderX(distance, botAngle(facingFront)), coordFinderY(distance, botAngle(facingFront)), TPID, facingFront);
   double lPow;
   double rPow;
+  double initRot = EncoderR.rotation(deg);
 
-  while(vectorLength(coordFinderX(distance, botAngle(facingFront)), coordFinderY(distance, botAngle(facingFront))) > 4)
+  while(distance - degToIn(std::abs(EncoderR.rotation(deg) - initRot), 2.75) > 3)
   {
     drive.updateSpeed();
     rPow = drive.getPow();

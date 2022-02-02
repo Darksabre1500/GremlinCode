@@ -16,6 +16,6 @@ void usercontrol(void) {
       moveArm(); 
       movePistons();
       moveRings();
-      haptics();
+      //haptics();
   }
 }
