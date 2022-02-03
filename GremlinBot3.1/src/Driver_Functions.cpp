@@ -100,3 +100,13 @@ void haptics(){
     interrupted = false;
   }
 }
+
+bool called = false;
+
+void callAuton(){
+  if (Controller1.ButtonDown.pressing() && !called){
+    autonomous();
+    waitUntil(!Competition.isAutonomous());
+    called = true;
+  }
+}

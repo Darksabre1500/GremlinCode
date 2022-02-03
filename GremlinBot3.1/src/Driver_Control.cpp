@@ -17,5 +17,6 @@ void usercontrol(void) {
       movePistons();
       moveRings();
       //haptics()
+      callAuton();
   }
 }

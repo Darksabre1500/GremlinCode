@@ -6,5 +6,6 @@
   void moveRings();
   void movePistons();
   void haptics();
+  void callAuton();
 
 #endif
