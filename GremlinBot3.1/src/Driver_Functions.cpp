@@ -79,10 +79,10 @@ void moveRings()
   }
 
   if (Controller1.ButtonB.pressing()){
-    RingConveyor.spin(reverse, 140, rpm);
+    RingConveyor.spin(reverse, 120, rpm);
   }
   else if (conveyorOn) {
-    RingConveyor.spin(fwd, 140, rpm);
+    RingConveyor.spin(fwd, 120, rpm);
   }
   else if (!conveyorOn) {
     RingConveyor.stop(brake);
