@@ -8,7 +8,6 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-triport WireExpansion = triport(PORT10);
 controller Controller1 = controller(primary);
 controller Controller2 = controller(partner);
 motor LFM = motor(PORT2, ratio18_1, true);
@@ -16,11 +15,11 @@ motor LBM = motor(PORT19, ratio18_1, true);
 motor RFM = motor(PORT6, ratio18_1, false);
 motor RBM = motor(PORT8, ratio18_1, false);
 encoder EncoderL = encoder(Brain.ThreeWirePort.G);
-encoder EncoderR = encoder(WireExpansion.C);
+encoder EncoderR = encoder(Brain.ThreeWirePort.E);
 motor RingConveyor = motor(PORT20, ratio18_1, false);
-digital_out FClamp = digital_out(WireExpansion.E);
-digital_out BClamp = digital_out(Brain.ThreeWirePort.E);
-encoder ArmEncoder = encoder(WireExpansion.A);
+digital_out FClamp = digital_out(Brain.ThreeWirePort.A);
+digital_out BClamp = digital_out(Brain.ThreeWirePort.B);
+encoder ArmEncoder = encoder(Brain.ThreeWirePort.C);
 motor ArmMotorA = motor(PORT11, ratio36_1, false);
 motor ArmMotorB = motor(PORT5, ratio36_1, true);
 motor_group Arm = motor_group(ArmMotorA, ArmMotorB);

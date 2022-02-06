@@ -1,3 +1,97 @@
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Controller2          controller                    
+// LFM                  motor         2               
+// LBM                  motor         19              
+// RFM                  motor         6               
+// RBM                  motor         8               
+// EncoderL             encoder       G, H            
+// EncoderR             encoder       E, F            
+// RingConveyor         motor         20              
+// FClamp               digital_out   A               
+// BClamp               digital_out   B               
+// ArmEncoder           encoder       C, D            
+// Arm                  motor_group   11, 5           
+// Distance             distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Controller2          controller                    
+// LFM                  motor         2               
+// LBM                  motor         19              
+// RFM                  motor         6               
+// RBM                  motor         8               
+// EncoderL             encoder       G, H            
+// EncoderR             encoder       E, F            
+// RingConveyor         motor         20              
+// WireExpansion        triport       10              
+// FClamp               digital_out   A               
+// BClamp               digital_out   B               
+// ArmEncoder           encoder       C, D            
+// Arm                  motor_group   11, 5           
+// Distance             distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Controller2          controller                    
+// LFM                  motor         2               
+// LBM                  motor         19              
+// RFM                  motor         6               
+// RBM                  motor         8               
+// EncoderL             encoder       G, H            
+// EncoderR             encoder       C, D            
+// RingConveyor         motor         20              
+// WireExpansion        triport       10              
+// FClamp               digital_out   A               
+// BClamp               digital_out   B               
+// ArmEncoder           encoder       C, D            
+// Arm                  motor_group   11, 5           
+// Distance             distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Controller2          controller                    
+// LFM                  motor         2               
+// LBM                  motor         19              
+// RFM                  motor         6               
+// RBM                  motor         8               
+// EncoderL             encoder       G, H            
+// EncoderR             encoder       C, D            
+// RingConveyor         motor         20              
+// WireExpansion        triport       10              
+// FClamp               digital_out   A               
+// BClamp               digital_out   E               
+// ArmEncoder           encoder       C, D            
+// Arm                  motor_group   11, 5           
+// Distance             distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Controller2          controller                    
+// LFM                  motor         2               
+// LBM                  motor         19              
+// RFM                  motor         6               
+// RBM                  motor         8               
+// EncoderL             encoder       G, H            
+// EncoderR             encoder       C, D            
+// RingConveyor         motor         20              
+// WireExpansion        triport       10              
+// FClamp               digital_out   E               
+// BClamp               digital_out   E               
+// ArmEncoder           encoder       C, D            
+// Arm                  motor_group   11, 5           
+// Distance             distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
