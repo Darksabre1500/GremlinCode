@@ -201,13 +201,14 @@ void TurnTo(double target_angle, double timeout)
 double armPos;
 
 int armMethod(){
+  TimeoutClock timer;
   if(armPos > ArmEncoder.rotation(deg)){
     Arm.spin(fwd, 100, pct);
-    waitUntil(armPos <= ArmEncoder.rotation(deg));
+    waitUntil(armPos <= ArmEncoder.rotation(deg) || timer.getTime() > 2);
   }
   else{
     Arm.spin(reverse, 100, pct);
-    waitUntil(armPos >= ArmEncoder.rotation(deg));
+    waitUntil(armPos >= ArmEncoder.rotation(deg) || timer.getTime() > 2);
   }
   Arm.stop(hold);
   return 0;
