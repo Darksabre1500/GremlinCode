@@ -28,11 +28,12 @@ void autonomous(void) {
 
   BClamp.set(true);
   wait(0.5, sec);
-  GoToStraight(7, 8, 5, true);
-  wait(0.5, sec);
+  moveRings(3, fwd, true);
+  //GoToStraight(7, 8, 5, true);
+  //wait(0.5, sec);
   TurnTo(0, 5);
   wait(0.5, sec);
-  GoToStraight(150, 8, 5, true);
+  GoToStraight(110, 8, 5, true);
   wait(0.5, sec);
   TurnTo(225, 5);
   wait(0.5, sec);
@@ -40,9 +41,10 @@ void autonomous(void) {
   wait(0.5, sec);
   GoToStraight(250, 8, 5, true);
   wait(0.5, sec);
-  TurnTo(180, 5);
+  GoToStraight(5, 4, 5, false);
+  TurnTo(160, 5);
   wait(0.5, sec);
-  GoToStraight(200, 8, 5, true);
+  GoToStraight(200, 8, 5, false);
 
   //GoToStraight(30, 8, 5, false);
 
