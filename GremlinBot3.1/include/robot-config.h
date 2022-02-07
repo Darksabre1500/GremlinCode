@@ -12,7 +12,6 @@ extern motor RBM;
 extern encoder EncoderL;
 extern encoder EncoderR;
 extern motor RingConveyor;
-extern triport WireExpansion;
 extern digital_out FClamp;
 extern digital_out BClamp;
 extern encoder ArmEncoder;

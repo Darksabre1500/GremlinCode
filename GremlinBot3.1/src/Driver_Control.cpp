@@ -11,11 +11,13 @@
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
+  BClamp.set(true);
   while (1) {
       drive(); 
       moveArm(); 
       movePistons();
       moveRings();
       //haptics()
+      //callAuton();
   }
 }
