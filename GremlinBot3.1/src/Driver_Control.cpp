@@ -11,6 +11,7 @@
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
+  BClamp.set(true);
   while (1) {
       drive(); 
       moveArm(); 
