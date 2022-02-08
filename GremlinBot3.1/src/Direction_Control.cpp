@@ -36,7 +36,7 @@ DriveController::DriveController(double targetX, double targetY, PIDClass &PID1,
 
 void str8Drive(double &initRPow, double &initLPow, bool fwd, double initLEnc, double initREnc){
   //Bigger this is, the slower the motor will go
-  PIDClass PID(0.004);
+  PIDClass PID(0.003);
   double edited;
 
   if (fwd){
