@@ -36,7 +36,7 @@ void autonomous(void) {
   GoToStraight(14, 7, 5, false);
   TurnTo(154, 5);
   wait(0.25, sec);
-  GoToStraight(18, 7, 3, false);
+  GoToStraight(22, 7, 2.5, false);
   BClamp.set(true);
   TurnTo(90, 5);
   wait(0.25, sec);
