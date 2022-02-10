@@ -50,7 +50,7 @@ int main() {
   task brainTB(brainDebug);
   task controllerTB(controllerDebug);
   task updateOdometry(odometry);
-  task terminal(TerminalDebug);
+  //task terminal(TerminalDebug);
 
   FClamp.set(true);
   BClamp.set(false);

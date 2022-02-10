@@ -36,33 +36,32 @@ DriveController::DriveController(double targetX, double targetY, PIDClass &PID1,
 
 void str8Drive(double &initRPow, double &initLPow, bool fwd, double initLEnc, double initREnc){
   //Bigger this is, the slower the motor will go
-  PIDClass PID(0.003);
+  PIDClass PID(0.002);
   double edited;
+  double LDiff = EncoderL.rotation(deg) - initLEnc;
+  double RDiff = EncoderR.rotation(deg) - initREnc;
+  PID.PID(std::abs(LDiff - RDiff), 0, 1);
 
   if (fwd){
-    if (EncoderL.rotation(deg) - initLEnc > EncoderR.rotation(deg) - initREnc){
-      PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
+    if (LDiff > RDiff){
       edited = initLPow * (1 - PID.getPow());
       std::cout << "InitL: " << initLPow << " PID: " << PID.getPow() << " Final: " << edited << std::endl;
       initLPow = edited;
     }
-    else if (EncoderL.rotation(deg) - initLPow < EncoderR.rotation(deg) - initREnc){
-      PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
+    else if (LDiff < RDiff){
       edited = initRPow * (1 - PID.getPow());
       std::cout << "InitR: " << initRPow << " PID: " << PID.getPow() << "Final: " << edited << std::endl;
       initRPow = edited;
     }
   }
   else {
-    if (EncoderL.rotation(deg) - initLEnc < EncoderR.rotation(deg) - initREnc){
-      PID.PID(EncoderL.rotation(deg) - EncoderR.rotation(deg), 0, 1);
-      edited = initLPow * (1 + PID.getPow());
+    if (LDiff < RDiff){
+      edited = initLPow * (1 - PID.getPow());
       std::cout << "InitL: " << initLPow << " PID: " << PID.getPow() << " Final: " << edited << std::endl;
       initLPow = edited;
     }
-    else if (EncoderL.rotation(deg) - initLEnc > EncoderR.rotation(deg) - initREnc){
-      PID.PID(EncoderR.rotation(deg) - EncoderL.rotation(deg), 0, 1);
-      edited = initRPow * (1 + PID.getPow());
+    else if (LDiff > RDiff){
+      edited = initRPow * (1 - PID.getPow());
       std::cout << "InitR: " << initRPow << " PID: " << PID.getPow() << "Final: " << edited << std::endl;
       initRPow = edited;
     }

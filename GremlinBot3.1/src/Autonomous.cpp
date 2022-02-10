@@ -17,30 +17,28 @@ Flipper Vals : -14 rev from purpendicular line start
 */
 
 void autonomous(void) {
-  /*GoToStraight(42, 8, 5, true);
-  wait(0.25, sec);
+
+  //Setup Bot to the left of yellow goal
+  ArmSet();
+  GoToStraight(37, 8, 5, true);
+  GoToStraight(5.5, 1, 2, true);
+  wait(0.275, sec);
   FClamp.set(false);
   wait(0.25, sec);
   moveArm(3, true);
-  GoToStraight(30, 8, 5, false);*/
-
-  //Setup Bot to the left of yellow goal
-
-  GoToStraight(44, 7, 2.5, false);
-  wait(0.15, sec);
+  GoToStraight(8, 3, 1.5, false);
+  TurnTo(198, 2.5);
+  wait(0.25, sec);
+  GoToStraight(37, 2.85, 7, false);
+  wait(0.25, sec);
   BClamp.set(true);
-  wait(0.15, sec);
-  TurnTo(190, 2);
-  //moveRings(3, fwd, true);
   wait(0.25, sec);
-  GoToStraight(30, 2.5, 4, true);
+  GoToStraight(30, 4, 7, true);
   wait(0.25, sec);
-  FClamp.set(false);
-  //driveTill(22, 5);
-  wait(0.15, sec);
-  TurnTo(240, 2);
-  GoToStraight(55, 4, 7, false);
+  TurnTo(250, 2);
+  wait(0.25, sec);
+  GoToStraight(30, 4, 7, true);
   //driveTill(27, 100, 3);
-  //GoToStraight(30, 8, 5, false);
+  //GoToStraight(30, 8, 5, false);*/
 
 } 
