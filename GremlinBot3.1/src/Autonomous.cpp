@@ -18,7 +18,8 @@ Flipper Vals : -14 rev from purpendicular line start
 
 void autonomous(void) {
 
-  /*BClamp.set(true);
+  GoToStraight(1, 1, 1, false);
+  BClamp.set(true);
   wait(0.5, sec);
   moveRings(3, fwd, true);
   TurnTo(0, 5);
@@ -34,9 +35,9 @@ void autonomous(void) {
   GoToStraight(8, 4, 5, false);
   TurnTo(150, 5);
   wait(0.5, sec);
-  GoToStraight(75, 8, 5, false);*/
+  GoToStraight(75, 8, 5, false);
 
-  FClamp.set(false);
+  /*FClamp.set(false);
   wait(0.5, sec);
   TurnTo(173, 5);
   wait(0.5, sec);
@@ -51,7 +52,7 @@ void autonomous(void) {
   GoToStraight(8, 4, 5, false);
   TurnTo(325, 5);
   wait(0.5, sec);
-  GoToStraight(75, 8, 5, false);
+  GoToStraight(75, 8, 5, false);*/
 
 
 } 
