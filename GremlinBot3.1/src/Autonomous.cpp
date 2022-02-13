@@ -32,15 +32,15 @@ void autonomous(void) {
   wait(0.275, sec);
   FClamp.set(false);
   wait(0.25, sec);
-  moveArm(5, true);
+  moveArm(2, true);
   GoToStraight(14, 7, 5, false);
   TurnTo(154, 5);
   wait(0.25, sec);
-  GoToStraight(22, 7, 2.5, false);
+  GoToStraight(22, 7, 3, false);
   BClamp.set(true);
   TurnTo(90, 5);
   wait(0.25, sec);
-  GoToStraight(10, 7, 7, false);
+  GoToStraight(13, 7, 5, false);
   moveRings(3, fwd, false);
   //GoToStraight(30, 8, 5, false);
 
