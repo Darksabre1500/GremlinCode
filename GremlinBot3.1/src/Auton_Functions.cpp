@@ -96,7 +96,7 @@ void GoToStraight(double distance, double PID, double timeout, bool facingFront)
     drive.updateSpeed();
     rPow = drive.getPow();
     lPow = drive.getPow();
-    //str8Drive(rPow, lPow, facingFront, initLRot, initRRot);
+    str8Drive(rPow, lPow, facingFront, initLRot, initRRot);
 
     LFM.spin(fwd, lPow, rpm);
     LBM.spin(fwd, lPow, rpm);
