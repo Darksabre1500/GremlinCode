@@ -52,7 +52,7 @@ int main() {
   task updateOdometry(odometry);
   //task terminal(TerminalDebug);
 
-  FClamp.set(true);
+  FClamp.set(false);
   BClamp.set(false);
 
 
