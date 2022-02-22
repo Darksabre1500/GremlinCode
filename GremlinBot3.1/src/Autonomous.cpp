@@ -26,6 +26,7 @@ void autonomous(void) {
 
   //Setup Bot to the left of yellow goal
 
+  FClamp.set(true);
   GoToStraight(46, 7, 5, true);
   FClamp.set(false);
   wait(0.25, sec);
