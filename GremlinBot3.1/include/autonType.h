@@ -10,6 +10,7 @@ using namespace vex;
   void TurnTo(double target_angle, double timeout);
   void moveArm (double ArmPos, bool threaded);
   void moveRings(double time, directionType dir, bool threaded);
+  void ArmSet();
 
 
 #endif
