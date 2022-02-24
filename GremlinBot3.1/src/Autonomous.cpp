@@ -28,7 +28,7 @@ void autonomous(void) {
 
   ArmSet();
   FClamp.set(true);
-  GoToStraight(46, 10, 2, true);
+  GoToStraight(48, 10, 2, true);
   FClamp.set(false);
   wait(0.125, sec);
   //moveArm(7, true);
@@ -42,7 +42,7 @@ void autonomous(void) {
   GoToStraight(17, 5, 3, false);
   BClamp.set(true);
   wait(0.25, sec);
-  GoToStraight(10, 5, 3, true);
+  GoToStraight(13, 5, 3, true);
   moveRings(3, fwd, false);
   /*wait(0.25, sec);
   GoToStraight(11, 4, 1.5, false);
