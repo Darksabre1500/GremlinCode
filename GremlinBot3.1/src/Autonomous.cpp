@@ -26,15 +26,18 @@ void autonomous(void) {
 
   //Setup Bot to the left of yellow goal
 
+  FClamp.set(true);
   ArmSet();
-  GoToStraight(41, 8, 5, true);
+  GoToStraight(43, 10, 2, true);
   FClamp.set(false);
-  moveArm(2, true);
-  GoToStraight(14, 7, 5, false);
-  TurnTo(154, 5);
+  wait(0.2, sec);
+  //moveArm(2, true);
+  GoToStraight(20, 5, 3, false);
+  TurnTo(180, 5);
   wait(0.25, sec);
-  GoToStraight(19, 7, 2.5, false);
+  GoToStraight(13, 7, 2.5, false);
   BClamp.set(true);
+  wait(0.25, sec);
   TurnTo(90, 5);
   wait(0.25, sec);
   GoToStraight(13, 7, 5, false);
