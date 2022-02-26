@@ -245,4 +245,14 @@ void moveRings(double time, directionType dir, bool threaded){
   }
 }
 
- 
+ int ArmSetMethod(){
+  Arm.spin(reverse, 100, pct);
+  wait(0.3, sec);
+  Arm.stop(hold);
+  ArmEncoder.resetRotation();
+  return 0;
+}
+
+void ArmSet(){
+  task threadArm(ArmSetMethod);
+} 
