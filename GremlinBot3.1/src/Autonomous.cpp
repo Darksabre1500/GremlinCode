@@ -37,6 +37,7 @@ void autonomous(void) {
   TurnTo(140, 5);
   wait(0.5, sec);
   GoToStraight(55, 8, 5, false);
+  
 
   /*FClamp.set(false);
   wait(0.5, sec);

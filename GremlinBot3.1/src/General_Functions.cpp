@@ -95,7 +95,7 @@ double second = 0;
 
     while (true) {
       //cout << flipperAngle();
-      wait(100, msec);
+      wait(30, msec);
       cout << RFM.velocity(rpm) << " " << RBM.velocity(rpm) << " " << LFM.velocity(rpm) << " " << LBM.velocity(rpm) << endl;
 
     }

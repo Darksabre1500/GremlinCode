@@ -1,3 +1,39 @@
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Controller2          controller                    
+// LFM                  motor         2               
+// LBM                  motor         19              
+// RFM                  motor         4               
+// RBM                  motor         8               
+// EncoderL             encoder       G, H            
+// EncoderR             encoder       E, F            
+// RingConveyor         motor         20              
+// FClamp               digital_out   A               
+// BClamp               digital_out   B               
+// ArmEncoder           encoder       C, D            
+// Arm                  motor_group   11, 5           
+// Distance             distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Controller2          controller                    
+// LFM                  motor         2               
+// LBM                  motor         19              
+// RFM                  motor         3               
+// RBM                  motor         8               
+// EncoderL             encoder       G, H            
+// EncoderR             encoder       E, F            
+// RingConveyor         motor         20              
+// FClamp               digital_out   A               
+// BClamp               digital_out   B               
+// ArmEncoder           encoder       C, D            
+// Arm                  motor_group   11, 5           
+// Distance             distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
@@ -50,7 +86,7 @@ int main() {
   task brainTB(brainDebug);
   task controllerTB(controllerDebug);
   task updateOdometry(odometry);
-  //task terminal(TerminalDebug);
+  task terminal(TerminalDebug);
 
   FClamp.set(true);
   BClamp.set(false);
